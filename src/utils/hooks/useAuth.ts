@@ -119,7 +119,7 @@ function useAuth() {
                 authority: [],
             }),
         )
-        navigate(appConfig.unAuthenticatedEntryPath)
+        navigate(appConfig.unAuthenticatedEntryPath.home)
     }
 
     const signOut = async () => {

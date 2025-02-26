@@ -1,7 +1,7 @@
 import { LAYOUT_TYPE_BLANK } from '@/constants/theme.constant'
 import { useAppSelector } from '@/store'
 import View from '@/views'
-import Side from './Side'
+import Simple from './Simple'
 
 const AuthLayout = () => {
     const layoutType = useAppSelector((state) => state.theme.layout.type)
@@ -11,9 +11,9 @@ const AuthLayout = () => {
             {layoutType === LAYOUT_TYPE_BLANK ? (
                 <View />
             ) : (
-                <Side>
+                <Simple>
                     <View />
-                </Side>
+                </Simple>
             )}
         </div>
     )

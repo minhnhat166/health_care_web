@@ -1,8 +1,7 @@
 import type { LayoutType } from '@/@types/theme'
+import { ProtectedRoute, PublicRoute } from '@/components/route'
 import AppRoute from '@/components/route/AppRoute'
 import AuthorityGuard from '@/components/route/AuthorityGuard'
-import ProtectedRoute from '@/components/route/ProtectedRoute'
-import PublicRoute from '@/components/route/PublicRoute'
 import Loading from '@/components/shared/Loading'
 import PageContainer from '@/components/template/PageContainer'
 import appConfig from '@/configs/app.config'
@@ -20,6 +19,29 @@ type AllRoutesProps = ViewsProps
 
 const { authenticatedEntryPath } = appConfig
 
+const generateRoutes = (routes, userAuthority, props) => {
+    return routes.map((route, index) => (
+        <Route
+            key={route.key + index}
+            path={route.path}
+            element={
+                <AuthorityGuard
+                    userAuthority={userAuthority}
+                    authority={route.authority}
+                >
+                    <PageContainer {...props} {...route.meta}>
+                        <AppRoute
+                            routeKey={route.key}
+                            component={route.component}
+                            {...route.meta}
+                        />
+                    </PageContainer>
+                </AuthorityGuard>
+            }
+        />
+    ))
+}
+
 const AllRoutes = (props: AllRoutesProps) => {
     const userAuthority = useAppSelector((state) => state.auth.user.authority)
 
@@ -28,31 +50,9 @@ const AllRoutes = (props: AllRoutesProps) => {
             <Route path="/" element={<ProtectedRoute />}>
                 <Route
                     path="/"
-                    element={
-                        <Navigate replace to={authenticatedEntryPath[0]} />
-                    } // Use the first entry path
+                    element={<Navigate replace to={authenticatedEntryPath} />}
                 />
-                {protectedRoutes.map((route, index) => (
-                    <Route
-                        key={route.key + index}
-                        path={route.path}
-                        element={
-                            <AuthorityGuard
-                                userAuthority={userAuthority}
-                                authority={route.authority}
-                            >
-                                <PageContainer {...props} {...route.meta}>
-                                    <AppRoute
-                                        routeKey={route.key}
-                                        component={route.component}
-                                        {...route.meta}
-                                    />
-                                </PageContainer>
-                            </AuthorityGuard>
-                        }
-                    />
-                ))}
-                <Route path="*" element={<Navigate replace to="/" />} />
+                {generateRoutes(protectedRoutes, userAuthority, props)}
             </Route>
             <Route path="/" element={<PublicRoute />}>
                 {publicRoutes.map((route) => (

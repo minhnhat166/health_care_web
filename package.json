@@ -3,8 +3,9 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "start": "vite",
-    "build": "vite build",
+    "start": "bun --hot vite",
+    "dev": "bun --hot vite",
+    "build": "bun vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
