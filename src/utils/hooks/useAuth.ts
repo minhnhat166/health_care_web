@@ -1,8 +1,13 @@
-import type { SignInCredential, SignUpCredential } from '@/@types/auth'
+import type {
+    BaseGetResponse,
+    SignInCredential,
+    SignUpCredential,
+} from '@/@types/auth'
 import appConfig from '@/configs/app.config'
 import { REDIRECT_URL_KEY } from '@/constants/app.constant'
-import { apiSignIn, apiSignOut, apiSignUp } from '@/services/AuthService'
+import { apiSignIn, apiSignUp } from '@/services/AuthService'
 import {
+    initialUserState,
     setUser,
     signInSuccess,
     signOutSuccess,
@@ -10,11 +15,11 @@ import {
     useAppSelector,
 } from '@/store'
 import { useNavigate } from 'react-router-dom'
+import decodeJwt from '../decodedJWT'
+import encrypt from '../encrypt'
 import useQuery from './useQuery'
 
-type Status = 'success' | 'failed'
-
-export const DEFAULT_USER = {}
+export type Status = 'success' | 'failed'
 
 function useAuth() {
     const dispatch = useAppDispatch()
@@ -25,45 +30,46 @@ function useAuth() {
 
     const { token, signedIn } = useAppSelector((state) => state.auth.session)
 
-    function getAuthenticatedEntryPath() {
-        return Array.isArray(appConfig.authenticatedEntryPath)
-            ? appConfig.authenticatedEntryPath[0]
-            : appConfig.authenticatedEntryPath
+    const authenticateUser = (
+        token: string,
+        response?: Record<string, unknown>,
+    ): { status: Status; message: string } => {
+        if (response?.status === 403 || response?.status === 401) {
+            handleSignOut()
+            return {
+                status: 'failed',
+                message: 'Unauthorized access. Redirecting to login.',
+            }
+        }
+
+        dispatch(signInSuccess(token))
+        const user = decodeJwt(token)
+        if (user) {
+            dispatch(setUser({ ...user } as any))
+        }
+
+        return {
+            status: 'success',
+            message: '',
+        }
     }
 
     const signIn = async (
         values: SignInCredential,
-    ): Promise<
-        | {
-              status: Status
-              message: string
-          }
-        | undefined
-    > => {
+    ): Promise<BaseGetResponse | undefined> => {
+        const { email, password } = values
+        const encryptedPassword = (await encrypt(password)) || ''
         try {
-            const resp = await apiSignIn(values)
-            if (resp.data) {
-                const { token } = resp.data
-                dispatch(signInSuccess(token))
-                if (resp.data.user) {
-                    dispatch(
-                        setUser(
-                            resp.data.user || {
-                                avatar: '',
-                                userName: 'Anonymous',
-                                authority: ['USER'],
-                                email: '',
-                            },
-                        ),
-                    )
-                }
-                const redirectUrl =
-                    query.get(REDIRECT_URL_KEY) || getAuthenticatedEntryPath()
-                navigate(redirectUrl)
-                return {
-                    status: 'success',
-                    message: '',
-                }
+            const response = await apiSignIn({
+                email,
+                password: encryptedPassword,
+            })
+            if (response) {
+                const token = response.data as unknown as string
+
+                return authenticateUser(token, {
+                    ...response,
+                })
             }
             // eslint-disable-next-line  @typescript-eslint/no-explicit-any
         } catch (errors: any) {
@@ -92,9 +98,12 @@ function useAuth() {
                         ),
                     )
                 }
-                const redirectUrl =
-                    query.get(REDIRECT_URL_KEY) || getAuthenticatedEntryPath()
-                navigate(redirectUrl)
+                const redirectUrl = query.get(REDIRECT_URL_KEY)
+                navigate(
+                    redirectUrl
+                        ? redirectUrl
+                        : appConfig.authenticatedEntryPath,
+                )
                 return {
                     status: 'success',
                     message: '',
@@ -111,19 +120,12 @@ function useAuth() {
 
     const handleSignOut = () => {
         dispatch(signOutSuccess())
-        dispatch(
-            setUser({
-                avatar: '',
-                userName: '',
-                email: '',
-                authority: [],
-            }),
-        )
-        navigate(appConfig.unAuthenticatedEntryPath.home)
+        dispatch(setUser(initialUserState))
+        navigate(appConfig.unAuthenticatedEntryPath)
     }
 
     const signOut = async () => {
-        await apiSignOut()
+        // await apiSignOut()
         handleSignOut()
     }
 

@@ -6,7 +6,7 @@ import type { ElementType, ReactNode } from 'react'
 interface BaseLoadingProps extends CommonProps {
     asElement?: ElementType
     customLoader?: ReactNode
-    loading: boolean
+    loading?: boolean
     spinnerClass?: string
 }
 
@@ -28,7 +28,7 @@ const DefaultLoading = (props: BaseLoadingProps) => {
         <Component
             className={classNames(
                 !customLoader && 'flex items-center justify-center h-full',
-                className
+                className,
             )}
         >
             {customLoader ? (
@@ -71,21 +71,46 @@ const CoveredLoading = (props: BaseLoadingProps) => {
     )
 }
 
-const Loading = ({ type, ...rest }: LoadingProps) => {
+// Update function signature with default parameters
+const Loading = ({
+    type = 'default',
+    loading = false,
+    asElement = 'div',
+    ...rest
+}: LoadingProps) => {
     switch (type) {
         case 'default':
-            return <DefaultLoading {...rest} />
+            return (
+                <DefaultLoading
+                    loading={loading}
+                    asElement={asElement}
+                    {...rest}
+                />
+            )
         case 'cover':
-            return <CoveredLoading {...rest} />
+            return (
+                <CoveredLoading
+                    loading={loading}
+                    asElement={asElement}
+                    {...rest}
+                />
+            )
         default:
-            return <DefaultLoading {...rest} />
+            return (
+                <DefaultLoading
+                    loading={loading}
+                    asElement={asElement}
+                    {...rest}
+                />
+            )
     }
 }
 
-Loading.defaultProps = {
-    loading: false,
-    type: 'default',
-    asElement: 'div',
-}
+// Remove the defaultProps assignment
+// Loading.defaultProps = {
+//     loading: false,
+//     type: 'default',
+//     asElement: 'div',
+// }
 
 export default Loading

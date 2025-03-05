@@ -3,9 +3,11 @@ import { lazy } from 'react'
 import authRoute from './authRoute'
 import testRoute from './testRoute'
 
-export const publicRoutes: Routes = [
-    ...authRoute,
-    ...testRoute,
+export const publicRoutes: Routes = [...authRoute, ...testRoute]
+
+export const protectedRoutes = [
+    // Example purpose only, please remove this line
+    // ...testRoute,
     {
         key: 'dashboard',
         path: '/dashboard',
@@ -15,9 +17,4 @@ export const publicRoutes: Routes = [
             layout: 'modern',
         },
     },
-]
-
-export const protectedRoutes = [
-    // Example purpose only, please remove this line
-    // ...testRoute,
 ]

@@ -11,7 +11,7 @@ import { useAppSelector } from '@/store'
 import useAuth from '@/utils/hooks/useAuth'
 import useDirection from '@/utils/hooks/useDirection'
 import useLocale from '@/utils/hooks/useLocale'
-import { lazy, Suspense, useMemo } from 'react'
+import { lazy, memo, Suspense, useMemo } from 'react'
 
 const layouts = {
     [LAYOUT_TYPE_CLASSIC]: lazy(() => import('./ClassicLayout')),
@@ -22,42 +22,37 @@ const layouts = {
     [LAYOUT_TYPE_BLANK]: lazy(() => import('./BlankLayout')),
 }
 
+// Move AuthLayout outside to avoid recreating it on every render
 const AuthLayout = lazy(() => import('./AuthLayout'))
+
+// Loading fallback component
+const LoadingFallback = () => (
+    <div className="flex flex-auto flex-col h-[100vh]">
+        <Loading loading={true} />
+    </div>
+)
 
 const Layout = () => {
     const layoutType = useAppSelector((state) => state.theme.layout.type)
     const { authenticated } = useAuth()
 
+    // Call hooks once per render
     useDirection()
     useLocale()
 
     const AppLayout = useMemo(() => {
-        // if (
-        //     layoutType === LAYOUT_TYPE_BLANK ||
-        //     layoutType === LAYOUT_TYPE_MODERN
-        // ) {
-        //     return layouts[layoutType]
-        // }
-
-        if (!authenticated && layoutType === LAYOUT_TYPE_SIMPLE) {
+        if (authenticated) {
             return layouts[layoutType]
         }
-
-        return authenticated ? layouts[layoutType] : AuthLayout
+        return AuthLayout
     }, [layoutType, authenticated])
 
     return (
-        <Suspense
-            fallback={
-                <div className="flex flex-auto flex-col h-screen items-center justify-center">
-                    {/* Center the loading */}
-                    <Loading loading={true} />
-                </div>
-            }
-        >
+        <Suspense fallback={<LoadingFallback />}>
             <AppLayout />
         </Suspense>
     )
 }
 
-export default Layout
+// Use memo to prevent unnecessary re-renders
+export default memo(Layout)
