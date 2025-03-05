@@ -22,10 +22,8 @@ const layouts = {
     [LAYOUT_TYPE_BLANK]: lazy(() => import('./BlankLayout')),
 }
 
-// Move AuthLayout outside to avoid recreating it on every render
-const AuthLayout = lazy(() => import('./AuthLayout'))
+const AuthLayout = lazy(() => import('./AuthLayout/index'))
 
-// Loading fallback component
 const LoadingFallback = () => (
     <div className="flex flex-auto flex-col h-[100vh]">
         <Loading loading={true} />
@@ -36,7 +34,6 @@ const Layout = () => {
     const layoutType = useAppSelector((state) => state.theme.layout.type)
     const { authenticated } = useAuth()
 
-    // Call hooks once per render
     useDirection()
     useLocale()
 
@@ -54,5 +51,4 @@ const Layout = () => {
     )
 }
 
-// Use memo to prevent unnecessary re-renders
 export default memo(Layout)

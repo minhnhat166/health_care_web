@@ -1,28 +1,66 @@
-import axios from 'axios'
+import { Notification, toast } from '@/components/ui'
 import appConfig from '@/configs/app.config'
-import { TOKEN_TYPE, REQUEST_HEADER_AUTH_KEY } from '@/constants/api.constant'
+import { REQUEST_HEADER_AUTH_KEY, TOKEN_TYPE } from '@/constants/api.constant'
 import { PERSIST_STORE_NAME } from '@/constants/app.constant'
+import i18n from '@/locales'
 import deepParseJson from '@/utils/deepParseJson'
-import store, { signOutSuccess } from '../store'
+import axios from 'axios'
+import { createElement } from 'react'
+import store, { persistor, signOutSuccess } from '../store'
 
 const unauthorizedCode = [401]
 
 const BaseService = axios.create({
-    timeout: 60000,
     baseURL: appConfig.apiPrefix,
+    timeout: 60000,
+    headers: {
+        'Content-Type': 'application/json',
+    },
 })
+
+const handleSignOut = async () => {
+    try {
+        await store.dispatch(signOutSuccess())
+        await persistor.flush()
+
+        toast.push(
+            createElement(
+                Notification,
+                {
+                    title: 'Error',
+                    type: 'warning',
+                    duration: 3000,
+                    closable: true,
+                },
+                i18n.t('sessionExpired'),
+            ),
+            {
+                placement: 'top-center',
+            },
+        )
+    } catch (error) {
+        console.error('Error in handleSignOut:', error)
+        throw error
+    }
+}
 
 BaseService.interceptors.request.use(
     (config) => {
         const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
-        const persistData = deepParseJson(rawPersistData)
+        let accessToken = null
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let accessToken = (persistData as any).auth.session.token
+        try {
+            const persistData = deepParseJson(rawPersistData)
+            if (persistData && (persistData as any).auth?.session?.token) {
+                accessToken = (persistData as any).auth.session.token
+            }
+        } catch (error) {
+            console.error('Error parsing persist data', error)
+        }
 
         if (!accessToken) {
             const { auth } = store.getState()
-            accessToken = auth.session.token
+            accessToken = auth?.session?.token
         }
 
         if (accessToken) {
@@ -33,17 +71,84 @@ BaseService.interceptors.request.use(
         return config
     },
     (error) => {
+        console.log('🚀 ~ error:', error)
         return Promise.reject(error)
     },
 )
 
 BaseService.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        console.log('🚀 ~ response:', response)
+        return response
+    },
     (error) => {
-        const { response } = error
+        console.log('🚀 ~ error:', error)
+        try {
+            const { response, code } = error
 
-        if (response && unauthorizedCode.includes(response.status)) {
-            store.dispatch(signOutSuccess())
+            // Handle authentication errors
+            if (response && unauthorizedCode.includes(response.status)) {
+                store.dispatch(signOutSuccess())
+                handleSignOut()
+                return Promise.reject(error)
+            }
+
+            // Handle network errors
+            if (code === 'ERR_NETWORK') {
+                toast.push(
+                    createElement(
+                        Notification,
+                        {
+                            title: 'Connection Error',
+                            type: 'danger',
+                            duration: 5000,
+                            closable: true,
+                        },
+                        'Unable to connect to the server. Please check your internet connection and try again.',
+                    ),
+                    {
+                        placement: 'top-center',
+                    },
+                )
+                return Promise.reject(error)
+            }
+
+            // Handle other API errors with response
+            if (response && response.data && response.data.message) {
+                toast.push(
+                    createElement(
+                        Notification,
+                        {
+                            title: 'Error',
+                            type: 'warning',
+                            duration: 3000,
+                            closable: true,
+                        },
+                        response.data.message,
+                    ),
+                    {
+                        placement: 'top-center',
+                    },
+                )
+            }
+        } catch (err) {
+            console.error('Error in error handling:', err)
+            // Show a generic error message
+            toast.push(
+                createElement(
+                    Notification,
+                    {
+                        title: 'Error',
+                        type: 'danger',
+                        duration: 3000,
+                        closable: true,
+                    },
+                    'An unexpected error occurred.',
+                ),
+                {
+                    placement: 'top-center',
+                },
+            )
         }
 
         return Promise.reject(error)

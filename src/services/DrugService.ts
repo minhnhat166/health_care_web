@@ -20,13 +20,12 @@ export interface GetDrugsNameResponse {
 export type ROUTE = 'listId' | 'product-list' | 'thuoc'
 
 export const apiGetDrugs = async (route: ROUTE) => {
-    return ApiService.fetchData<GetDrugsIdResponse | GetDrugsNameResponse>({
-        url: `/api.php`,
-        method: 'get',
-        params: {
+    return ApiService.get<GetDrugsIdResponse | GetDrugsNameResponse>(
+        `${import.meta.env.VITE_DRUG_URL}/api.php`,
+        {
             route: route,
         },
-    })
+    )
 }
 
 export const apiGetDrug = async (route: ROUTE, id: string) => {
