@@ -1,26 +1,27 @@
 import Header from '@/components/template/Header'
-import SidePanel from '@/components/template/SidePanel'
-import UserDropdown from '@/components/template/UserDropdown'
 import MobileNav from '@/components/template/MobileNav'
+import SidePanel from '@/components/template/SidePanel'
 import StackedSideNav from '@/components/template/StackedSideNav'
+import UserDropdown from '@/components/template/UserDropdown'
 import View from '@/views'
+import { memo } from 'react'
 
-const HeaderActionsStart = () => {
+const HeaderActionsStart = memo(() => {
     return (
         <>
             <MobileNav />
         </>
     )
-}
+})
 
-const HeaderActionsEnd = () => {
+const HeaderActionsEnd = memo(() => {
     return (
         <>
             <SidePanel />
             <UserDropdown hoverable={false} />
         </>
     )
-}
+})
 
 const StackedSideLayout = () => {
     return (
@@ -42,4 +43,4 @@ const StackedSideLayout = () => {
     )
 }
 
-export default StackedSideLayout
+export default memo(StackedSideLayout)

@@ -1,28 +1,35 @@
 import Header from '@/components/template/Header'
-import SidePanel from '@/components/template/SidePanel'
-import UserDropdown from '@/components/template/UserDropdown'
-import SideNavToggle from '@/components/template/SideNavToggle'
+import LanguageSelector from '@/components/template/LanguageSelector'
 import MobileNav from '@/components/template/MobileNav'
 import SideNav from '@/components/template/SideNav'
+import SideNavToggle from '@/components/template/SideNavToggle'
+import SidePanel from '@/components/template/SidePanel'
+import UserDropdown from '@/components/template/UserDropdown'
 import View from '@/views'
+import { memo } from 'react'
 
-const HeaderActionsStart = () => {
+const HeaderActionsStart = memo(() => {
     return (
         <>
             <MobileNav />
             <SideNavToggle />
         </>
     )
-}
+})
 
-const HeaderActionsEnd = () => {
+HeaderActionsStart.displayName = 'HeaderActionsStart'
+
+const HeaderActionsEnd = memo(() => {
     return (
         <>
+            <LanguageSelector />
             <SidePanel />
             <UserDropdown hoverable={false} />
         </>
     )
-}
+})
+
+HeaderActionsEnd.displayName = 'HeaderActionsEnd'
 
 const ModernLayout = () => {
     return (
@@ -42,4 +49,4 @@ const ModernLayout = () => {
     )
 }
 
-export default ModernLayout
+export default memo(ModernLayout)
