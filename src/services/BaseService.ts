@@ -39,7 +39,21 @@ const handleSignOut = async () => {
             },
         )
     } catch (error) {
-        console.error('Error in handleSignOut:', error)
+        toast.push(
+            createElement(
+                Notification,
+                {
+                    title: 'Error',
+                    type: 'danger',
+                    duration: 3000,
+                    closable: true,
+                },
+                'An unexpected error occurred.',
+            ),
+            {
+                placement: 'top-center',
+            },
+        )
         throw error
     }
 }
@@ -71,18 +85,30 @@ BaseService.interceptors.request.use(
         return config
     },
     (error) => {
-        console.log('🚀 ~ error:', error)
+        toast.push(
+            createElement(
+                Notification,
+                {
+                    title: 'Error',
+                    type: 'danger',
+                    duration: 3000,
+                    closable: true,
+                },
+                'An unexpected error occurred.',
+            ),
+            {
+                placement: 'top-center',
+            },
+        )
         return Promise.reject(error)
     },
 )
 
 BaseService.interceptors.response.use(
     (response) => {
-        console.log('🚀 ~ response:', response)
         return response
     },
     (error) => {
-        console.log('🚀 ~ error:', error)
         try {
             const { response, code } = error
 
@@ -132,8 +158,6 @@ BaseService.interceptors.response.use(
                 )
             }
         } catch (err) {
-            console.error('Error in error handling:', err)
-            // Show a generic error message
             toast.push(
                 createElement(
                     Notification,

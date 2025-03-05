@@ -8,7 +8,7 @@ import PageContainer from '@/components/template/PageContainer'
 import appConfig from '@/configs/app.config'
 import { protectedRoutes, publicRoutes } from '@/configs/routes.config'
 import { useAppSelector } from '@/store'
-import React, { Suspense, useMemo } from 'react'
+import { Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 interface ViewsProps {
@@ -16,14 +16,16 @@ interface ViewsProps {
     layout?: LayoutType
 }
 
+type AllRoutesProps = ViewsProps
+
 const { authenticatedEntryPath } = appConfig
 
-const ProtectedRoutesList = React.memo(({ props }: { props: ViewsProps }) => {
+const AllRoutes = (props: AllRoutesProps) => {
     const userAuthority = useAppSelector((state) => state.auth.user.authority)
 
-    return useMemo(
-        () => (
-            <>
+    return (
+        <Routes>
+            <Route path="/" element={<ProtectedRoute />}>
                 <Route
                     path="/"
                     element={<Navigate replace to={authenticatedEntryPath} />}
@@ -49,44 +51,25 @@ const ProtectedRoutesList = React.memo(({ props }: { props: ViewsProps }) => {
                     />
                 ))}
                 <Route path="*" element={<Navigate replace to="/" />} />
-            </>
-        ),
-        [userAuthority, props],
-    )
-})
-
-const PublicRoutesList = React.memo(() => {
-    return useMemo(
-        () =>
-            publicRoutes.map((route) => (
-                <Route
-                    key={route.path}
-                    path={route.path}
-                    element={
-                        <AppRoute
-                            routeKey={route.key}
-                            component={route.component}
-                            {...route.meta}
-                        />
-                    }
-                />
-            )),
-        [],
-    )
-})
-
-const AllRoutes = React.memo((props: ViewsProps) => {
-    return (
-        <Routes>
-            <Route path="/" element={<ProtectedRoute />}>
-                <ProtectedRoutesList props={props} />
             </Route>
             <Route path="/" element={<PublicRoute />}>
-                <PublicRoutesList />
+                {publicRoutes.map((route) => (
+                    <Route
+                        key={route.path}
+                        path={route.path}
+                        element={
+                            <AppRoute
+                                routeKey={route.key}
+                                component={route.component}
+                                {...route.meta}
+                            />
+                        }
+                    />
+                ))}
             </Route>
         </Routes>
     )
-})
+}
 
 const Views = (props: ViewsProps) => {
     return (
