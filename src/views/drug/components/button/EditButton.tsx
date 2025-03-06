@@ -25,7 +25,6 @@ interface EditButtonProps {
     onSuccess?: () => void
 }
 
-// Move form field definitions outside the component
 const EDITABLE_FIELDS = [
     'tenThuoc',
     'hieuLuc',
@@ -78,7 +77,6 @@ const EditButton = ({
     const { t } = useTranslation()
     const toast = useToast()
 
-    // Generic error handler
     const handleError = useCallback(
         (messageKey: string) => {
             setError(t(messageKey))
@@ -126,7 +124,6 @@ const EditButton = ({
         setError(null)
     }, [])
 
-    // Define validation schema for the drug form
     const validationSchema = useMemo(
         () =>
             Yup.object().shape({
@@ -176,7 +173,6 @@ const EditButton = ({
         [t],
     )
 
-    // Create initial values from drug data, extracting only editable fields
     const initialValues: EditableDrugFields = useMemo(() => {
         if (!drugData) {
             return EDITABLE_FIELDS.reduce(
@@ -225,7 +221,6 @@ const EditButton = ({
         [drugId, onSave, onSuccess, t, toast, handleClose, handleError],
     )
 
-    // Form section components
     const FormSection = ({ title, children }: any) => (
         <>
             <div className="col-span-2 border-b border-gray-200 pb-2 mb-2 mt-4">
@@ -237,7 +232,6 @@ const EditButton = ({
         </>
     )
 
-    // Memoize form field groups to prevent unnecessary re-renders
     const renderBasicInfoFields = useCallback(
         ({ touched, errors }: any) => (
             <>
