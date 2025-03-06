@@ -109,13 +109,13 @@ const VerticalMenuContent = (props: VerticalMenuContentProps) => {
                                         direction={direction}
                                         onLinkClick={onMenuItemClick}
                                     />
-                                )
+                                ),
                             )}
                         </MenuGroup>
                     </AuthorityCheck>
                 )
             } else {
-                ;<MenuGroup label={nav.title} />
+                return <MenuGroup label={nav.title} />
             }
         }
     }

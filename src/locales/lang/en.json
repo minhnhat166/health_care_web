@@ -16,5 +16,99 @@
                 "item2": "Group collapse menu item 2"
             }
         }
+    },
+    "views": {
+        "drug": {
+            "title": "Drug",
+            "components": {
+                "columns": {
+                    "no": "No.",
+                    "drugId": "Drug ID",
+                    "drugName": "Drug Name",
+                    "approvalBatch": "Approval Batch",
+                    "decisionNumber": "Decision Number",
+                    "approvalDate": "Approval Date",
+                    "effectiveness": "Effectiveness",
+                    "registrationNumber": "Registration Number",
+                    "activeIngredients": "Active Ingredients",
+                    "classification": "Classification",
+                    "concentration": "Concentration",
+                    "excipients": "Excipients",
+                    "dosageForm": "Dosage Form",
+                    "packaging": "Packaging",
+                    "standards": "Standards",
+                    "shelfLife": "Shelf Life",
+                    "manufacturer": "Manufacturer",
+                    "manufacturerCode": "Manufacturer Code",
+                    "countryOfManufacture": "Country of Manufacture",
+                    "manufacturingAddress": "Manufacturing Address",
+                    "registrant": "Registrant",
+                    "countryOfRegistration": "Country of Registration",
+                    "registrationAddress": "Registration Address",
+                    "declaredPrice": "Declared Price",
+                    "usageInstructions": "Usage Instructions",
+                    "patientUsageInstructions": "Patient Usage Instructions",
+                    "drugGroup": "Drug Group",
+                    "isHidden": "Is Hidden",
+                    "rate": "Rate",
+                    "withdrawSdk": "Withdraw SDK",
+                    "fileName": "File Name",
+                    "state": "State",
+                    "createdAt": "Created At",
+                    "updatedAt": "Updated At",
+                    "images": "Images",
+                    "searchCount": "Search Count",
+                    "actions": "Actions"
+                },
+                "buttons": {
+                    "delete": "Delete",
+                    "cancel": "Cancel",
+                    "details": "Details",
+                    "edit": "Edit",
+                    "save": "Save Changes",
+                    "retry": "Try Again"
+                },
+                "loading": {
+                    "fetchingDrugData": "Loading drug data..."
+                },
+                "dialog": {
+                    "confirmDeletion": "Confirm Deletion",
+                    "deleteConfirmation": "Are you sure you want to delete this drug? This action cannot be undone.",
+                    "editDrug": "Edit Drug"
+                },
+                "tooltip": {
+                    "clickToDelete": "Click to delete",
+                    "clickToEdit": "Click to edit"
+                },
+                "toast": {
+                    "error": "Error",
+                    "success": "Success",
+                    "errorDeletingDrug": "An error occurred while deleting the drug.",
+                    "drugUpdatedSuccess": "Drug updated successfully",
+                    "errorUpdatingDrug": "An error occurred while updating the drug.",
+                    "errorFetchingDrugData": "An error occurred while fetching drug details data."
+                },
+                "error": {
+                    "failedToLoadDrugData": "Failed to load drug data. Please try again."
+                },
+                "form": {
+                    "sections": {
+                        "basicInfo": "Basic Information",
+                        "manufacturer": "Manufacturer Details",
+                        "usage": "Usage Information"
+                    },
+                    "placeholders": {
+                        "enterDrugName": "Enter drug name",
+                        "enterApprovalBatch": "Enter approval batch",
+                        "enterDecisionNumber": "Enter decision number"
+                    },
+                    "validation": {
+                        "drugNameRequired": "Drug name is required",
+                        "approvalBatchRequired": "Approval batch is required",
+                        "decisionNumberRequired": "Decision number is required"
+                    }
+                }
+            }
+        }
     }
 }

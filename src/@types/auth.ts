@@ -1,5 +1,7 @@
+import type { Status } from '@/utils/hooks/useAuth'
+
 export type SignInCredential = {
-    userName: string
+    email: string
     password: string
 }
 
@@ -27,4 +29,9 @@ export type ForgotPassword = {
 
 export type ResetPassword = {
     password: string
+}
+
+export type BaseGetResponse = {
+    status: Status
+    message: string
 }

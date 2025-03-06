@@ -19,7 +19,13 @@ export default defineConfig({
             '@': path.join(__dirname, 'src'),
         },
     },
-    build: {
-        outDir: 'dist',
+    define: {
+        'process.env': process.env,
+        VITE_API_HOST: JSON.stringify(process.env.VITE_SWAGGER_URL),
+    },
+    server: {
+        hmr: {
+            overlay: false, // Disable the HMR overlay
+        },
     },
 })

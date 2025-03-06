@@ -1,23 +1,29 @@
+import type { Routes } from '@/@types/routes'
 import { lazy } from 'react'
 import authRoute from './authRoute'
-import type { Routes } from '@/@types/routes'
 import testRoute from './testRoute'
-import adminRoute from './admin.route'
 
-export const publicRoutes: Routes = [
-    ...authRoute,
-    ...testRoute,
-    {
-        key: 'home',
-        path: '/home',
-        component: lazy(() => import('@/views/Home')),
-        authority: [],
-        meta: {},
-    },
-]
+export const publicRoutes: Routes = [...authRoute, ...testRoute]
 
-export const protectedRoutes = [
+export const protectedRoutes: Routes = [
     // Example purpose only, please remove this line
     // ...testRoute,
-    ...adminRoute,
+    {
+        key: 'dashboard',
+        path: '/dashboard',
+        component: lazy(() => import('@/views/dashboard/Dashboard')),
+        authority: [],
+        meta: {
+            layout: 'modern',
+        },
+    },
+    {
+        key: 'drug',
+        path: '/drug',
+        component: lazy(() => import('@/views/drug/Drug')),
+        authority: [],
+        meta: {
+            layout: 'modern',
+        },
+    },
 ]

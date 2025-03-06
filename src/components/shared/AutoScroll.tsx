@@ -65,8 +65,6 @@ const AutoScroll = ({
     const heightValue = typeof height === 'number' ? `${height}px` : height
     const widthValue = typeof width === 'number' ? `${width}px` : width
 
-    const _wrapperClassName = classNames('relative w-full', wrapperClassName)
-
     const _containerClassName = classNames(`flex`, containerClassName, {
         'flex-col': direction === 'vertical',
         'flex-row': direction === 'horizontal',
@@ -85,15 +83,15 @@ const AutoScroll = ({
         //             {title}
         //         </h2>
         //     )}
-            <div className={_containerClassName} {...rest}>
-                <div
-                    ref={containerRef}
-                    className={_childClassName}
-                    style={{ height: heightValue, width: widthValue }}
-                >
-                    {children}
-                </div>
+        <div className={_containerClassName} {...rest}>
+            <div
+                ref={containerRef}
+                className={_childClassName}
+                style={{ height: heightValue, width: widthValue }}
+            >
+                {children}
             </div>
+        </div>
         // </div>
     )
 }

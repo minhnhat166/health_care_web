@@ -1,28 +1,29 @@
 import Header from '@/components/template/Header'
+import HeaderLogo from '@/components/template/HeaderLogo'
+import MobileNav from '@/components/template/MobileNav'
+import SecondaryHeader from '@/components/template/SecondaryHeader'
 import SidePanel from '@/components/template/SidePanel'
 import UserDropdown from '@/components/template/UserDropdown'
-import HeaderLogo from '@/components/template/HeaderLogo'
-import SecondaryHeader from '@/components/template/SecondaryHeader'
-import MobileNav from '@/components/template/MobileNav'
 import View from '@/views'
+import { memo } from 'react'
 
-const HeaderActionsStart = () => {
-    return (
-        <>
-            <HeaderLogo />
-            <MobileNav />
-        </>
-    )
-}
+const HeaderActionsStart = memo(() => (
+    <>
+        <HeaderLogo />
+        <MobileNav />
+    </>
+))
 
-const HeaderActionsEnd = () => {
-    return (
-        <>
-            <SidePanel />
-            <UserDropdown hoverable={false} />
-        </>
-    )
-}
+const HeaderActionsEnd = memo(() => (
+    <>
+        <SidePanel />
+        <UserDropdown hoverable={false} />
+    </>
+))
+
+// Add component name for better debugging
+HeaderActionsStart.displayName = 'HeaderActionsStart'
+HeaderActionsEnd.displayName = 'HeaderActionsEnd'
 
 const DeckedLayout = () => {
     return (
@@ -43,4 +44,4 @@ const DeckedLayout = () => {
     )
 }
 
-export default DeckedLayout
+export default memo(DeckedLayout)

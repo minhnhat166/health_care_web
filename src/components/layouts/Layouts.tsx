@@ -1,17 +1,17 @@
-import { useMemo, lazy, Suspense } from 'react'
 import Loading from '@/components/shared/Loading'
-import { useAppSelector } from '@/store'
 import {
+    LAYOUT_TYPE_BLANK,
     LAYOUT_TYPE_CLASSIC,
+    LAYOUT_TYPE_DECKED,
     LAYOUT_TYPE_MODERN,
     LAYOUT_TYPE_SIMPLE,
     LAYOUT_TYPE_STACKED_SIDE,
-    LAYOUT_TYPE_DECKED,
-    LAYOUT_TYPE_BLANK,
 } from '@/constants/theme.constant'
+import { useAppSelector } from '@/store'
 import useAuth from '@/utils/hooks/useAuth'
 import useDirection from '@/utils/hooks/useDirection'
 import useLocale from '@/utils/hooks/useLocale'
+import { lazy, memo, Suspense, useMemo } from 'react'
 
 const layouts = {
     [LAYOUT_TYPE_CLASSIC]: lazy(() => import('./ClassicLayout')),
@@ -22,35 +22,33 @@ const layouts = {
     [LAYOUT_TYPE_BLANK]: lazy(() => import('./BlankLayout')),
 }
 
+const AuthLayout = lazy(() => import('./AuthLayout/index'))
+
+const LoadingFallback = () => (
+    <div className="flex flex-auto flex-col h-[100vh]">
+        <Loading loading={true} />
+    </div>
+)
+
 const Layout = () => {
     const layoutType = useAppSelector((state) => state.theme.layout.type)
-
     const { authenticated } = useAuth()
 
     useDirection()
-
     useLocale()
 
     const AppLayout = useMemo(() => {
-        if (!authenticated && layoutType === LAYOUT_TYPE_SIMPLE) {
-            return layouts[LAYOUT_TYPE_SIMPLE]
+        if (authenticated) {
+            return layouts[layoutType]
         }
-        return authenticated
-            ? layouts[layoutType]
-            : lazy(() => import('./AuthLayout'))
+        return AuthLayout
     }, [layoutType, authenticated])
 
     return (
-        <Suspense
-            fallback={
-                <div className="flex flex-auto flex-col h-[100vh]">
-                    <Loading loading={true} />
-                </div>
-            }
-        >
+        <Suspense fallback={<LoadingFallback />}>
             <AppLayout />
         </Suspense>
     )
 }
 
-export default Layout
+export default memo(Layout)

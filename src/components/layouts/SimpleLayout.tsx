@@ -1,27 +1,22 @@
+import { memo } from 'react'
 import Header from '@/components/template/Header'
 import HeaderLogo from '@/components/template/HeaderLogo'
-import HorizontalNav from '@/components/template/HorizontalNav'
 import MobileNav from '@/components/template/MobileNav'
 import UserDropdown from '@/components/template/UserDropdown'
 import View from '@/views'
 
-const HeaderActionsStart = () => {
-    return (
-        <>
-            <HeaderLogo />
-            <MobileNav />
-        </>
-    )
-}
+const HeaderActionsStart = memo(() => (
+    <>
+        <HeaderLogo />
+        <MobileNav />
+    </>
+))
 
-const HeaderActionsEnd = () => {
-    return (
-        <>
-            {/* <SidePanel />  */}
-            <UserDropdown hoverable={false} />
-        </>
-    )
-}
+const HeaderActionsEnd = memo(() => (
+    <>
+        <UserDropdown hoverable={false} />
+    </>
+))
 
 const SimpleLayout = () => {
     return (
@@ -32,7 +27,6 @@ const SimpleLayout = () => {
                         container
                         className="shadow dark:shadow-2xl"
                         headerStart={<HeaderActionsStart />}
-                        // headerMiddle={<HorizontalNav />}
                         headerEnd={<HeaderActionsEnd />}
                     />
                     <View pageContainerType="contained" />
@@ -42,4 +36,4 @@ const SimpleLayout = () => {
     )
 }
 
-export default SimpleLayout
+export default memo(SimpleLayout)
