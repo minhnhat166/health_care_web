@@ -5,13 +5,22 @@ import testRoute from './testRoute'
 
 export const publicRoutes: Routes = [...authRoute, ...testRoute]
 
-export const protectedRoutes = [
+export const protectedRoutes: Routes = [
     // Example purpose only, please remove this line
     // ...testRoute,
     {
         key: 'dashboard',
         path: '/dashboard',
         component: lazy(() => import('@/views/dashboard/Dashboard')),
+        authority: [],
+        meta: {
+            layout: 'modern',
+        },
+    },
+    {
+        key: 'drug',
+        path: '/drug',
+        component: lazy(() => import('@/views/drug/Drug')),
         authority: [],
         meta: {
             layout: 'modern',

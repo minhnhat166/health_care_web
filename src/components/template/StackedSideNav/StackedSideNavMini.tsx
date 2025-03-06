@@ -1,23 +1,23 @@
-import { useEffect } from 'react'
+import type { CommonProps } from '@/@types/common'
+import type { NavigationTree } from '@/@types/navigation'
+import type { Direction, Mode, NavMode } from '@/@types/theme'
+import AuthorityCheck from '@/components/shared/AuthorityCheck'
 import Logo from '@/components/template/Logo'
 import Menu from '@/components/ui/Menu'
 import ScrollBar from '@/components/ui/ScrollBar'
+import navigationIcon from '@/configs/navigation-icon.config'
+import navigationConfig from '@/configs/navigation.config'
+import { NAV_ITEM_TYPE_ITEM } from '@/constants/navigation.constant'
 import {
     NAV_MODE_DARK,
     NAV_MODE_THEMED,
     NAV_MODE_TRANSPARENT,
     SIDE_NAV_CONTENT_GUTTER,
 } from '@/constants/theme.constant'
-import { NAV_ITEM_TYPE_ITEM } from '@/constants/navigation.constant'
-import AuthorityCheck from '@/components/shared/AuthorityCheck'
-import navigationConfig from '@/configs/navigation.config'
-import navigationIcon from '@/configs/navigation-icon.config'
 import useMenuActive from '@/utils/hooks/useMenuActive'
 import isEmpty from 'lodash/isEmpty'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import type { NavigationTree } from '@/@types/navigation'
-import type { Direction, NavMode, Mode } from '@/@types/theme'
-import type { CommonProps } from '@/@types/common'
 
 export type SelectedMenuItem = {
     key?: string

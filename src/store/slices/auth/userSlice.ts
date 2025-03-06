@@ -4,7 +4,9 @@ import { SLICE_BASE_NAME } from './constants'
 export type UserState = {
     avatar?: string
     userName?: string
+    userId?: string
     email?: string
+    role?: string
     authority?: string[]
 }
 

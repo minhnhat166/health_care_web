@@ -1,19 +1,21 @@
-import classNames from 'classnames'
+import Logo from '@/components/template/Logo'
+import VerticalMenuContent from '@/components/template/VerticalMenuContent'
 import ScrollBar from '@/components/ui/ScrollBar'
+import navigationConfig from '@/configs/navigation.config'
 import {
-    SIDE_NAV_WIDTH,
-    SIDE_NAV_COLLAPSED_WIDTH,
+    LOGO_X_GUTTER,
     NAV_MODE_DARK,
     NAV_MODE_THEMED,
     NAV_MODE_TRANSPARENT,
+    SIDE_NAV_COLLAPSED_WIDTH,
     SIDE_NAV_CONTENT_GUTTER,
-    LOGO_X_GUTTER,
+    SIDE_NAV_WIDTH,
 } from '@/constants/theme.constant'
-import Logo from '@/components/template/Logo'
-import navigationConfig from '@/configs/navigation.config'
-import VerticalMenuContent from '@/components/template/VerticalMenuContent'
-import useResponsive from '@/utils/hooks/useResponsive'
 import { useAppSelector } from '@/store'
+import useResponsive from '@/utils/hooks/useResponsive'
+import classNames from 'classnames'
+import { motion } from 'framer-motion'
+import { HiOutlineHome } from 'react-icons/hi'
 
 const sideNavStyle = {
     width: SIDE_NAV_WIDTH,
@@ -25,19 +27,60 @@ const sideNavCollapseStyle = {
     minWidth: SIDE_NAV_COLLAPSED_WIDTH,
 }
 
+// Animation variants
+const sideNavVariants = {
+    expanded: {
+        width: SIDE_NAV_WIDTH,
+        transition: { duration: 0.3, ease: 'easeInOut' },
+    },
+    collapsed: {
+        width: SIDE_NAV_COLLAPSED_WIDTH,
+        transition: { duration: 0.3, ease: 'easeInOut' },
+    },
+}
+
+const contentVariants = {
+    expanded: {
+        opacity: 1,
+        transition: {
+            delay: 0.15,
+            duration: 0.2,
+            ease: 'easeInOut',
+        },
+    },
+    collapsed: {
+        opacity: 0,
+        transition: {
+            duration: 0.2,
+            ease: 'easeInOut',
+        },
+    },
+}
+
+const logoVariants = {
+    expanded: {
+        x: 0,
+        transition: { duration: 0.3, ease: 'easeInOut' },
+    },
+    collapsed: {
+        x: 0,
+        transition: { duration: 0.3, ease: 'easeInOut' },
+    },
+}
+
 const SideNav = () => {
     const themeColor = useAppSelector((state) => state.theme.themeColor)
     const primaryColorLevel = useAppSelector(
-        (state) => state.theme.primaryColorLevel
+        (state) => state.theme.primaryColorLevel,
     )
     const navMode = useAppSelector((state) => state.theme.navMode)
     const mode = useAppSelector((state) => state.theme.mode)
     const direction = useAppSelector((state) => state.theme.direction)
     const currentRouteKey = useAppSelector(
-        (state) => state.base.common.currentRouteKey
+        (state) => state.base.common.currentRouteKey,
     )
     const sideNavCollapse = useAppSelector(
-        (state) => state.theme.layout.sideNavCollapse
+        (state) => state.theme.layout.sideNavCollapse,
     )
     const userAuthority = useAppSelector((state) => state.auth.user.authority)
 
@@ -76,37 +119,49 @@ const SideNav = () => {
     return (
         <>
             {larger.md && (
-                <div
-                    style={
-                        sideNavCollapse ? sideNavCollapseStyle : sideNavStyle
-                    }
+                <motion.div
+                    initial={sideNavCollapse ? 'collapsed' : 'expanded'}
+                    animate={sideNavCollapse ? 'collapsed' : 'expanded'}
+                    variants={sideNavVariants}
                     className={classNames(
                         'side-nav',
                         sideNavColor(),
-                        !sideNavCollapse && 'side-nav-expand'
+                        !sideNavCollapse && 'side-nav-expand',
                     )}
                 >
-                    <div className="side-nav-header">
-                        <Logo
-                            mode={logoMode()}
-                            type={sideNavCollapse ? 'streamline' : 'full'}
-                            className={
-                                sideNavCollapse
-                                    ? SIDE_NAV_CONTENT_GUTTER
-                                    : LOGO_X_GUTTER
-                            }
-                        />
-                    </div>
+                    <motion.div
+                        className="side-nav-header flex items-center justify-center p-4"
+                        variants={logoVariants}
+                    >
+                        {sideNavCollapse ? (
+                            <HiOutlineHome size={24} />
+                        ) : (
+                            <Logo
+                                mode={logoMode()}
+                                type={sideNavCollapse ? 'streamline' : 'full'}
+                                className={classNames(
+                                    sideNavCollapse
+                                        ? SIDE_NAV_CONTENT_GUTTER
+                                        : LOGO_X_GUTTER,
+                                )}
+                            />
+                        )}
+                    </motion.div>
                     {sideNavCollapse ? (
                         menuContent
                     ) : (
-                        <div className="side-nav-content">
+                        <motion.div
+                            className="side-nav-content"
+                            initial="collapsed"
+                            animate="expanded"
+                            variants={contentVariants}
+                        >
                             <ScrollBar autoHide direction={direction}>
                                 {menuContent}
                             </ScrollBar>
-                        </div>
+                        </motion.div>
                     )}
-                </div>
+                </motion.div>
             )}
         </>
     )

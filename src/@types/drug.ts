@@ -1,8 +1,7 @@
 export type Drug = {
-    id: string
-    images: (string | null)[]
+    drugId: string
     tenThuoc: string
-    dotPheDuyet: string
+    dotPheDuyet: string | null
     soQuyetDinh: string
     pheDuyet: string
     hieuLuc: string | null
@@ -27,14 +26,12 @@ export type Drug = {
     huongDanSuDungBn: string | null
     nhomThuoc: string
     isHide: boolean | null
-    rate: string
-    rutSdk: number
-    rutSdkFile: string[]
-    chuY: string | null
-    ten: string | null
-    meta: {
-        fileName: string
-    }
-    rows: any[]
+    rate: number
+    rutSdk: boolean
+    fileName: string
     state: number
+    createdAt: string
+    updatedAt: string
+    images: string | null
+    searchCount: number | null
 }

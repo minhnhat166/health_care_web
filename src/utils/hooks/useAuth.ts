@@ -16,7 +16,6 @@ import {
 } from '@/store'
 import { useNavigate } from 'react-router-dom'
 import decodeJwt from '../decodedJWT'
-import encrypt from '../encrypt'
 import useQuery from './useQuery'
 
 export type Status = 'success' | 'failed'
@@ -44,6 +43,7 @@ function useAuth() {
 
         dispatch(signInSuccess(token))
         const user = decodeJwt(token)
+        console.log('🚀 ~ useAuth ~ user:', user)
         if (user) {
             dispatch(setUser({ ...user } as any))
         }
@@ -58,15 +58,14 @@ function useAuth() {
         values: SignInCredential,
     ): Promise<BaseGetResponse | undefined> => {
         const { email, password } = values
-        const encryptedPassword = (await encrypt(password)) || ''
+        // const encryptedPassword = (await encrypt(password)) || ''
         try {
             const response = await apiSignIn({
                 email,
-                password: encryptedPassword,
+                password,
             })
             if (response) {
-                const token = response.data as unknown as string
-
+                const token = response.data.token as unknown as string
                 return authenticateUser(token, {
                     ...response,
                 })
