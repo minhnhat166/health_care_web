@@ -35,4 +35,14 @@ export const protectedRoutes: Routes = [
             layout: 'modern',
         },
     },
+
+    {
+        key: 'user',
+        path: '/user',
+        component: lazy(() => import('@/views/user/list/UserList')),
+        authority: [],
+        meta: {
+            layout: 'modern',
+        },
+    },
 ]

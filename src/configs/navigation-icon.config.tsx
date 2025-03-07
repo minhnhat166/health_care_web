@@ -1,3 +1,4 @@
+import { FaRegUser } from 'react-icons/fa'
 import { GiMedicines } from 'react-icons/gi'
 import {
     HiOutlineColorSwatch,
@@ -14,6 +15,7 @@ const navigationIcon: NavigationIcons = {
     home: <HiOutlineHome />,
     dashboard: <LuLayoutDashboard />,
     drug: <GiMedicines />,
+    user: <FaRegUser />,
     singleMenu: <HiOutlineViewGridAdd />,
     collapseMenu: <HiOutlineTemplate />,
     groupSingleMenu: <HiOutlineDesktopComputer />,
