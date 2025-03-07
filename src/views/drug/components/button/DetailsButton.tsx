@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui'
 import { motion } from 'framer-motion'
-import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { FaEye } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 
 interface DetailsButtonProps {
     drugId: string | number
@@ -11,7 +10,7 @@ interface DetailsButtonProps {
 
 const MotionButton = motion(Button)
 
-const DetailsButton: React.FC<DetailsButtonProps> = ({ drugId }) => {
+const DetailsButton = ({ drugId }: DetailsButtonProps) => {
     const navigate = useNavigate()
     const { t } = useTranslation()
 

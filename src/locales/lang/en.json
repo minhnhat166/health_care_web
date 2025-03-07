@@ -95,7 +95,11 @@
                     "sections": {
                         "basicInfo": "Basic Information",
                         "manufacturer": "Manufacturer Details",
-                        "usage": "Usage Information"
+                        "usage": "Usage Information",
+                        "approval": "Approval Information",
+                        "formulation": "Formulation Details",
+                        "registrationCompany": "Registration Company",
+                        "additionalInfo": "Additional Information"
                     },
                     "placeholders": {
                         "enterDrugName": "Enter drug name",
@@ -108,6 +112,80 @@
                         "decisionNumberRequired": "Decision number is required"
                     }
                 }
+            },
+            "fields": {
+                "drugId": "Drug ID",
+                "drugName": "Drug Name",
+                "approvalBatch": "Approval Batch",
+                "decisionNumber": "Decision Number",
+                "approvalDate": "Approval Date",
+                "effectiveDate": "Effective Date",
+                "registrationNumber": "Registration Number",
+                "activeIngredients": "Active Ingredients",
+                "classification": "Classification",
+                "concentration": "Concentration",
+                "excipients": "Excipients",
+                "dosageForm": "Dosage Form",
+                "packaging": "Packaging",
+                "standards": "Standards",
+                "shelfLife": "Shelf Life",
+                "manufacturer": "Manufacturer",
+                "manufacturerCode": "Manufacturer Code",
+                "countryOfManufacture": "Country of Manufacture",
+                "manufacturingAddress": "Manufacturing Address",
+                "registrant": "Registrant",
+                "countryOfRegistration": "Country of Registration",
+                "registrationAddress": "Registration Address",
+                "declaredPrice": "Declared Price",
+                "usageInstructions": "Usage Instructions",
+                "patientUsageInstructions": "Patient Usage Instructions",
+                "drugGroup": "Drug Group",
+                "isHidden": "Hidden from public view",
+                "withdrawSdk": "Withdraw SDK",
+                "fileName": "File Name",
+                "images": "Images",
+                "rate": "Rate"
+            },
+            "placeholders": {
+                "drugName": "Enter drug name",
+                "drugId": "Enter drug ID",
+                "approvalBatch": "Enter approval batch",
+                "decisionNumber": "Enter decision number",
+                "registrationNumber": "Enter registration number",
+                "activeIngredients": "Enter active ingredients",
+                "concentration": "Enter concentration",
+                "excipients": "Enter excipients",
+                "packaging": "Enter packaging information",
+                "standards": "Enter standards",
+                "manufacturer": "Enter manufacturer name",
+                "manufacturerCode": "Enter manufacturer code",
+                "countryOfManufacture": "Enter country of manufacture",
+                "manufacturingAddress": "Enter manufacturing address",
+                "shelfLife": "Enter shelf life (e.g., 24 months)",
+                "registrant": "Enter registrant name",
+                "countryOfRegistration": "Enter country of registration",
+                "registrationAddress": "Enter registration address",
+                "declaredPrice": "Enter declared price",
+                "usageInstructions": "Enter usage instructions",
+                "patientUsageInstructions": "Enter patient usage instructions",
+                "dosageForm": "Enter dosage form",
+                "withdrawSdk": "Enter withdraw SDK information",
+                "fileName": "Enter file name",
+                "images": "Enter image URLs (comma separated)",
+                "selectDate": "Select date",
+                "selectDrugGroup": "Select drug group"
+            },
+            "groups": {
+                "antibiotics": "Antibiotics",
+                "analgesics": "Analgesics",
+                "antivirals": "Antivirals",
+                "vaccines": "Vaccines",
+                "other": "Other"
+            },
+            "classifications": {
+                "prescription": "Prescription",
+                "otc": "Over-the-counter",
+                "controlled": "Controlled substance"
             }
         }
     }

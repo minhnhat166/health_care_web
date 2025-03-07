@@ -1,9 +1,10 @@
+import { GiMedicines } from 'react-icons/gi'
 import {
     HiOutlineColorSwatch,
     HiOutlineDesktopComputer,
+    HiOutlineHome,
     HiOutlineTemplate,
     HiOutlineViewGridAdd,
-    HiOutlineHome,
 } from 'react-icons/hi'
 import { LuLayoutDashboard } from 'react-icons/lu'
 
@@ -12,6 +13,7 @@ export type NavigationIcons = Record<string, JSX.Element>
 const navigationIcon: NavigationIcons = {
     home: <HiOutlineHome />,
     dashboard: <LuLayoutDashboard />,
+    drug: <GiMedicines />,
     singleMenu: <HiOutlineViewGridAdd />,
     collapseMenu: <HiOutlineTemplate />,
     groupSingleMenu: <HiOutlineDesktopComputer />,

@@ -1,6 +1,5 @@
 import type { Drug } from '@/@types/drug'
 import ContentCell from '@/components/ui/Cell/ContentCell'
-import StatusCell from '@/components/ui/Cell/StatusCell'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
 import ActionColumn from './ActionsColumn'

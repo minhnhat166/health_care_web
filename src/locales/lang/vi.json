@@ -1,0 +1,191 @@
+{
+    "nav": {
+        "home": "Trang chủ",
+        "singleMenuItem": "Mục đơn",
+        "collapseMenu": {
+            "collapseMenu": "Mục thu gọn",
+            "item1": "Mục thu gọn 1",
+            "item2": "Mục thu gọn 2"
+        },
+        "groupMenu": {
+            "groupMenu": "Nhóm mục",
+            "single": "Mục đơn nhóm",
+            "collapse": {
+                "collapse": "Nhóm mục thu gọn",
+                "item1": "Nhóm mục thu gọn 1",
+                "item2": "Nhóm mục thu gọn 2"
+            }
+        }
+    },
+    "views": {
+        "drug": {
+            "title": "Thuốc",
+            "components": {
+                "columns": {
+                    "no": "STT",
+                    "drugId": "Mã thuốc",
+                    "drugName": "Tên thuốc",
+                    "approvalBatch": "Lô phê duyệt",
+                    "decisionNumber": "Số quyết định",
+                    "approvalDate": "Ngày phê duyệt",
+                    "effectiveness": "Hiệu quả",
+                    "registrationNumber": "Số đăng ký",
+                    "activeIngredients": "Thành phần hoạt chất",
+                    "classification": "Phân loại",
+                    "concentration": "Nồng độ",
+                    "excipients": "Tá dược",
+                    "dosageForm": "Dạng bào chế",
+                    "packaging": "Đóng gói",
+                    "standards": "Tiêu chuẩn",
+                    "shelfLife": "Hạn sử dụng",
+                    "manufacturer": "Nhà sản xuất",
+                    "manufacturerCode": "Mã nhà sản xuất",
+                    "countryOfManufacture": "Nước sản xuất",
+                    "manufacturingAddress": "Địa chỉ sản xuất",
+                    "registrant": "Người đăng ký",
+                    "countryOfRegistration": "Nước đăng ký",
+                    "registrationAddress": "Địa chỉ đăng ký",
+                    "declaredPrice": "Giá khai báo",
+                    "usageInstructions": "Hướng dẫn sử dụng",
+                    "patientUsageInstructions": "Hướng dẫn sử dụng cho bệnh nhân",
+                    "drugGroup": "Nhóm thuốc",
+                    "isHidden": "Ẩn",
+                    "rate": "Đánh giá",
+                    "withdrawSdk": "Rút SDK",
+                    "fileName": "Tên tệp",
+                    "state": "Trạng thái",
+                    "createdAt": "Ngày tạo",
+                    "updatedAt": "Ngày cập nhật",
+                    "images": "Hình ảnh",
+                    "searchCount": "Số lần tìm kiếm",
+                    "actions": "Hành động"
+                },
+                "buttons": {
+                    "delete": "Xóa",
+                    "cancel": "Hủy",
+                    "details": "Chi tiết",
+                    "edit": "Chỉnh sửa",
+                    "save": "Lưu thay đổi",
+                    "retry": "Thử lại"
+                },
+                "loading": {
+                    "fetchingDrugData": "Đang tải dữ liệu thuốc..."
+                },
+                "dialog": {
+                    "confirmDeletion": "Xác nhận xóa",
+                    "deleteConfirmation": "Bạn có chắc chắn muốn xóa thuốc này không? Hành động này không thể hoàn tác.",
+                    "editDrug": "Chỉnh sửa thuốc"
+                },
+                "tooltip": {
+                    "clickToDelete": "Nhấn để xóa",
+                    "clickToEdit": "Nhấn để chỉnh sửa"
+                },
+                "toast": {
+                    "error": "Lỗi",
+                    "success": "Thành công",
+                    "errorDeletingDrug": "Đã xảy ra lỗi khi xóa thuốc.",
+                    "drugUpdatedSuccess": "Cập nhật thuốc thành công",
+                    "errorUpdatingDrug": "Đã xảy ra lỗi khi cập nhật thuốc.",
+                    "errorFetchingDrugData": "Đã xảy ra lỗi khi tải dữ liệu chi tiết thuốc."
+                },
+                "error": {
+                    "failedToLoadDrugData": "Không thể tải dữ liệu thuốc. Vui lòng thử lại."
+                },
+                "form": {
+                    "sections": {
+                        "basicInfo": "Thông tin cơ bản",
+                        "manufacturer": "Chi tiết nhà sản xuất",
+                        "usage": "Thông tin sử dụng",
+                        "approval": "Thông tin phê duyệt",
+                        "formulation": "Chi tiết công thức",
+                        "registrationCompany": "Công ty đăng ký",
+                        "additionalInfo": "Thông tin bổ sung"
+                    },
+                    "placeholders": {
+                        "enterDrugName": "Nhập tên thuốc",
+                        "enterApprovalBatch": "Nhập lô phê duyệt",
+                        "enterDecisionNumber": "Nhập số quyết định"
+                    },
+                    "validation": {
+                        "drugNameRequired": "Tên thuốc là bắt buộc",
+                        "approvalBatchRequired": "Lô phê duyệt là bắt buộc",
+                        "decisionNumberRequired": "Số quyết định là bắt buộc"
+                    }
+                }
+            },
+            "fields": {
+                "drugId": "Mã thuốc",
+                "drugName": "Tên thuốc",
+                "approvalBatch": "Lô phê duyệt",
+                "decisionNumber": "Số quyết định",
+                "approvalDate": "Ngày phê duyệt",
+                "effectiveDate": "Ngày hiệu lực",
+                "registrationNumber": "Số đăng ký",
+                "activeIngredients": "Thành phần hoạt chất",
+                "classification": "Phân loại",
+                "concentration": "Nồng độ",
+                "excipients": "Tá dược",
+                "dosageForm": "Dạng bào chế",
+                "packaging": "Đóng gói",
+                "standards": "Tiêu chuẩn",
+                "shelfLife": "Hạn sử dụng",
+                "manufacturer": "Nhà sản xuất",
+                "manufacturerCode": "Mã nhà sản xuất",
+                "countryOfManufacture": "Nước sản xuất",
+                "manufacturingAddress": "Địa chỉ sản xuất",
+                "registrant": "Người đăng ký",
+                "countryOfRegistration": "Nước đăng ký",
+                "registrationAddress": "Địa chỉ đăng ký",
+                "declaredPrice": "Giá khai báo",
+                "usageInstructions": "Hướng dẫn sử dụng",
+                "patientUsageInstructions": "Hướng dẫn sử dụng cho bệnh nhân",
+                "drugGroup": "Nhóm thuốc",
+                "isHidden": "Ẩn khỏi công chúng",
+                "withdrawSdk": "Rút SDK",
+                "fileName": "Tên tệp",
+                "images": "Hình ảnh"
+            },
+            "placeholders": {
+                "drugName": "Nhập tên thuốc",
+                "drugId": "Nhập mã thuốc",
+                "approvalBatch": "Nhập lô phê duyệt",
+                "decisionNumber": "Nhập số quyết định",
+                "registrationNumber": "Nhập số đăng ký",
+                "activeIngredients": "Nhập thành phần hoạt chất",
+                "concentration": "Nhập nồng độ",
+                "excipients": "Nhập tá dược",
+                "packaging": "Nhập thông tin đóng gói",
+                "standards": "Nhập tiêu chuẩn",
+                "manufacturer": "Nhập tên nhà sản xuất",
+                "manufacturerCode": "Nhập mã nhà sản xuất",
+                "countryOfManufacture": "Nhập nước sản xuất",
+                "manufacturingAddress": "Nhập địa chỉ sản xuất",
+                "shelfLife": "Nhập hạn sử dụng (ví dụ: 24 tháng)",
+                "registrant": "Nhập tên người đăng ký",
+                "countryOfRegistration": "Nhập nước đăng ký",
+                "registrationAddress": "Nhập địa chỉ đăng ký",
+                "declaredPrice": "Nhập giá khai báo",
+                "usageInstructions": "Nhập hướng dẫn sử dụng",
+                "patientUsageInstructions": "Nhập hướng dẫn sử dụng cho bệnh nhân",
+                "dosageForm": "Nhập dạng bào chế",
+                "withdrawSdk": "Nhập thông tin rút SDK",
+                "fileName": "Nhập tên tệp",
+                "images": "Nhập URL hình ảnh (cách nhau bằng dấu phẩy)",
+                "selectDate": "Chọn ngày",
+                "selectDrugGroup": "Chọn nhóm thuốc"
+            },
+            "groups": {
+                "antibiotics": "Kháng sinh",
+                "analgesics": "Giảm đau",
+                "antivirals": "Kháng virus",
+                "vaccines": "Vắc xin",
+                "other": "Khác"
+            },
+            "classifications": {
+                "prescription": "Thuốc kê đơn",
+                "otc": "Thuốc không kê đơn",
+                "controlled": "Chất kiểm soát"
+            }
+        }
+    }
+}
