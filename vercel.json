@@ -8,9 +8,7 @@
         { "source": "/(.*)", "destination": "/index.html" }
     ],
     "env": {
-        "NODE_ENV": "production",
-        "VITE_SWAGGER_URL": "https://be.bellybabe.site",
-        "VITE_SWAGGER_API_URL": "https://be.bellybabe.site/api"
+        "NODE_ENV": "production"
     },
     "cleanUrls": true,
     "trailingSlash": false
