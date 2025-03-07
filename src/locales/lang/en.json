@@ -19,7 +19,7 @@
     },
     "views": {
         "drug": {
-            "title": "Drug",
+            "title": "Drugs",
             "components": {
                 "columns": {
                     "no": "No.",
@@ -111,6 +111,17 @@
                         "approvalBatchRequired": "Approval batch is required",
                         "decisionNumberRequired": "Decision number is required"
                     }
+                },
+                "sections": {
+                    "detail": {
+                        "drugName": "Drug Name"
+                    },
+                    "basicInfo": "Basic Information",
+                    "manufacturer": "Manufacturer Details",
+                    "usage": "Usage Information",
+                    "approval": "Approval Information",
+                    "formulation": "Formulation Details",
+                    "registrationCompany": "Registration Company"
                 }
             },
             "fields": {

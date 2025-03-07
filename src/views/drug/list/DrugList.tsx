@@ -7,7 +7,7 @@ import reducer, { SLICE_NAME } from './store'
 
 injectReducer(SLICE_NAME, reducer)
 
-function Drug() {
+function DrugList() {
     const { t } = useTranslation()
 
     return (
@@ -30,4 +30,4 @@ function Drug() {
         </AdaptableCard>
     )
 }
-export default Drug
+export default DrugList

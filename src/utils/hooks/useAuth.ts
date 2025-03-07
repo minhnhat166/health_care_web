@@ -43,7 +43,6 @@ function useAuth() {
 
         dispatch(signInSuccess(token))
         const user = decodeJwt(token)
-        console.log('🚀 ~ useAuth ~ user:', user)
         if (user) {
             dispatch(setUser({ ...user } as any))
         }

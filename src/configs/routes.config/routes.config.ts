@@ -20,7 +20,16 @@ export const protectedRoutes: Routes = [
     {
         key: 'drug',
         path: '/drug',
-        component: lazy(() => import('@/views/drug/Drug')),
+        component: lazy(() => import('@/views/drug/list/DrugList')),
+        authority: [],
+        meta: {
+            layout: 'modern',
+        },
+    },
+    {
+        key: 'drugDetail',
+        path: '/drug/:drugId',
+        component: lazy(() => import('@/views/drug/detail/DrugDetail')),
         authority: [],
         meta: {
             layout: 'modern',
