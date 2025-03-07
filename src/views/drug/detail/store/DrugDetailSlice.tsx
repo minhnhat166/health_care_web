@@ -11,7 +11,7 @@ export type DrugDetailState = {
     error: Error
 }
 
-export const initialError: Error = {
+export const initialError: DrugDetailState['error'] = {
     code: null,
     message: '',
 }
@@ -19,10 +19,7 @@ export const initialError: Error = {
 export const initialDrugDetailState: DrugDetailState = {
     result: null,
     loading: false,
-    error: {
-        code: null,
-        message: '',
-    },
+    error: initialError,
 }
 
 export const getApiDrugDetail = createAsyncThunk(
@@ -37,7 +34,6 @@ export const getApiDrugDetail = createAsyncThunk(
             }
 
             const response = await apiGetDrugsId(drugId)
-            console.log('🚀 ~ response:', response)
 
             if (response?.data) {
                 return response.data

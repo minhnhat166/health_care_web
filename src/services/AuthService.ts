@@ -1,3 +1,4 @@
+import type { extend } from 'lodash'
 import ApiService from './ApiService'
 import type {
     SignInCredential,
@@ -10,7 +11,7 @@ import type {
 
 export async function apiSignIn(data: SignInCredential) {
     return ApiService.fetchData<SignInResponse>({
-        url: '/api/Auth/login',
+        url: '/api/auth/login',
         method: 'post',
         data,
     })
@@ -18,7 +19,7 @@ export async function apiSignIn(data: SignInCredential) {
 
 export async function apiSignUp(data: SignUpCredential) {
     return ApiService.fetchData<SignUpResponse>({
-        url: '/api/Auth/register',
+        url: '/api/auth/register',
         method: 'post',
         data,
     })
@@ -26,14 +27,14 @@ export async function apiSignUp(data: SignUpCredential) {
 
 export async function apiSignOut() {
     return ApiService.fetchData({
-        url: '/sign-out',
+        url: '/api/auth/sign-out',
         method: 'post',
     })
 }
 
 export async function apiForgotPassword(data: ForgotPassword) {
     return ApiService.fetchData({
-        url: '/forgot-password',
+        url: '/api/auth/forgot-password',
         method: 'post',
         data,
     })
@@ -41,7 +42,17 @@ export async function apiForgotPassword(data: ForgotPassword) {
 
 export async function apiResetPassword(data: ResetPassword) {
     return ApiService.fetchData({
-        url: '/reset-password',
+        url: '/api/auth/reset-password',
+        method: 'post',
+        data,
+    })
+}
+
+export const apiRefreshToken = async <T, U extends Record<string, unknown>>(
+    data: U,
+) => {
+    return ApiService.fetchData<T>({
+        url: '/api/auth/refresh-token',
         method: 'post',
         data,
     })
