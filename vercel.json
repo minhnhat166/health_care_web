@@ -1,20 +1,17 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "package.json",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/"
-        }
+    "framework": "vite",
+    "buildCommand": "bun run build",
+    "outputDirectory": "dist",
+    "rewrites": [
+        { "source": "/api/(.*)", "destination": "/api/$1" },
+        { "source": "/(.*)", "destination": "/index.html" }
     ],
     "env": {
         "NODE_ENV": "production",
         "VITE_SWAGGER_URL": "https://be.bellybabe.site",
         "VITE_SWAGGER_API_URL": "https://be.bellybabe.site/api"
-    }
+    },
+    "cleanUrls": true,
+    "trailingSlash": false
 }
