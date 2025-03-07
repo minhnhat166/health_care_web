@@ -1,0 +1,7 @@
+/* Add these custom utilities to your existing Tailwind CSS file */
+
+@layer utilities {
+  .bg-gradient-radial {
+    background-image: radial-gradient(var(--tw-gradient-stops));
+  }
+}

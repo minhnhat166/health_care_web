@@ -15,7 +15,9 @@ const DetailsButton = ({ drugId }: DetailsButtonProps) => {
     const { t } = useTranslation()
 
     const handleViewDetails = () => {
-        navigate(`/drugs/${drugId}/details`)
+        navigate(`/drug/${drugId}`, {
+            state: { drugId },
+        })
     }
 
     return (
