@@ -18,6 +18,82 @@
         }
     },
     "views": {
+        "user": {
+            "title": "Users",
+            "components": {
+                "columns": {
+                    "no": "No.",
+                    "userId": "User ID",
+                    "name": "Name",
+                    "email": "Email",
+                    "phoneNumber": "Phone Number",
+                    "role": "Role",
+                    "actions": "Actions"
+                },
+                "buttons": {
+                    "delete": "Delete",
+                    "cancel": "Cancel",
+                    "details": "Details",
+                    "edit": "Edit",
+                    "save": "Save Changes",
+                    "retry": "Try Again"
+                },
+                "dialog": {
+                    "confirmDeletion": "Confirm Deletion",
+                    "deleteConfirmation": "Are you sure you want to delete this user? This action cannot be undone.",
+                    "editUser": "Edit User"
+                },
+                "toast": {
+                    "error": "Error",
+                    "success": "Success",
+                    "errorDeletingUser": "An error occurred while deleting the user.",
+                    "userUpdatedSuccess": "User updated successfully",
+                    "errorUpdatingUser": "An error occurred while updating the user.",
+                    "errorFetchingUserData": "An error occurred while fetching user details data."
+                },
+                "loading": {
+                    "fetchingUserData": "Loading user data..."
+                },
+                "error": {
+                    "failedToLoadUserData": "Failed to load user data. Please try again."
+                },
+                "form": {
+                    "sections": {
+                        "basicInfo": "Basic Information",
+                        "contactInfo": "Contact Information",
+                        "roleInfo": "Role Information"
+                    },
+                    "placeholders": {
+                        "userIdPlaceholder": "User ID (cannot be changed)",
+                        "namePlaceholder": "Enter full name",
+                        "emailPlaceholder": "Enter email address",
+                        "phoneNumberPlaceholder": "Enter phone number",
+                        "rolePlaceholder": "Enter user role"
+                    },
+                    "validation": {
+                        "userIdRequired": "User ID is required",
+                        "nameRequired": "Name is required",
+                        "emailRequired": "Email is required",
+                        "emailInvalid": "Please enter a valid email address",
+                        "phoneNumberRequired": "Phone number is required",
+                        "roleRequired": "Role is required"
+                    }
+                },
+                "tooltip": {
+                    "clickToDelete": "Click to delete",
+                    "clickToEdit": "Click to edit"
+                }
+            },
+            "fields": {
+                "userId": "User ID",
+                "name": "Name",
+                "email": "Email",
+                "phoneNumber": "Phone Number",
+                "role": "Role",
+                "createdAt": "Created At",
+                "updatedAt": "Updated At"
+            }
+        },
         "drug": {
             "title": "Drugs",
             "components": {

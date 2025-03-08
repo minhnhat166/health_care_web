@@ -25,7 +25,7 @@ const layouts = {
 const AuthLayout = lazy(() => import('./AuthLayout/index'))
 
 const LoadingFallback = () => (
-    <div className="flex flex-auto flex-col h-[100vh]">
+    <div className="flex flex-auto flex-col h-screen">
         <Loading loading={true} />
     </div>
 )

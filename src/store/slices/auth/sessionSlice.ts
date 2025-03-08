@@ -4,11 +4,13 @@ import { SLICE_BASE_NAME } from './constants'
 export interface SessionState {
     signedIn: boolean
     token: string | null
+    refreshToken?: string | null
 }
 
 const initialState: SessionState = {
     signedIn: false,
     token: null,
+    refreshToken: null,
 }
 
 const sessionSlice = createSlice({
