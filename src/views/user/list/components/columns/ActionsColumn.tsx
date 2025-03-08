@@ -21,7 +21,7 @@ const ActionColumn = memo(
     }: ActionColumnProps) => {
         return (
             <div
-                className={`flex items-center gap-2 flex-auto flex-col ${className}`}
+                className={`flex items-start gap-2 flex-auto flex-col ${className}`}
             >
                 {showDelete && <DeleteButton id={id} />}
                 {showEdit && <EditButton id={id} />}
