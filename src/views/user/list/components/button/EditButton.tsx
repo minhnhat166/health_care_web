@@ -107,7 +107,7 @@ const EditButton = ({
                     <Dialog
                         isOpen={isOpen}
                         onClose={handleClose}
-                        className="overflow-hidden translate-y-1/2"
+                        className="overflow-hidden"
                     >
                         <motion.div
                             initial={{ opacity: 0 }}

@@ -14,6 +14,7 @@ const UserListTable = () => {
         (state) => state.userList.items.metadata,
     )
     const data = useAppSelector((state) => state.userList.items.result)
+    const filterData = data.filter((item) => item.role !== 'ADMIN')
     const loading = useAppSelector((state) => state.userList.items.loading)
 
     // columns
@@ -54,7 +55,7 @@ const UserListTable = () => {
         <DataTable
             ref={tableRef}
             columns={columns}
-            data={data}
+            data={filterData}
             skeletonAvatarColumns={[0]}
             skeletonAvatarProps={{ className: 'rounded-md' }}
             loading={loading}

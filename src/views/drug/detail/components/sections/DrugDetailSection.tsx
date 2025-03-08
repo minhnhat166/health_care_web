@@ -1,5 +1,5 @@
 import type { Drug } from '@/@types/drug'
-import { Card } from '@/components/ui'
+import { Card, Skeleton } from '@/components/ui'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 
@@ -73,27 +73,40 @@ const DrugDetailSection = ({ drug }: DrugDetailSectionProps) => {
         </motion.div>
     )
 
-    // More compact section rendering
     const renderSection = (
         title: string,
         fields: { key: string; value: any }[],
-    ) => (
-        <motion.div
-            className="mb-3 last:mb-0"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-        >
-            <h3 className="font-semibold text-sm text-primary-600 dark:text-primary-400 mb-2 flex items-center">
-                <div className="w-1 h-4 bg-primary-500 rounded-full mr-1.5"></div>
-                {title}
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-1 md:gap-1.5">
-                {fields.map((field) => renderField(field.key, field.value))}
-            </div>
-            <div className="w-full h-px bg-gray-200 dark:bg-gray-700 mt-3"></div>
-        </motion.div>
-    )
+    ) => {
+        return title ? (
+            <motion.div
+                className="mb-3 last:mb-0"
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+            >
+                <h3 className="font-semibold text-sm text-primary-600 dark:text-primary-400 mb-2 flex items-center">
+                    <motion.div
+                        className="w-1 h-4 bg-primary-500 rounded-full mr-1.5"
+                        initial={{ height: 0 }}
+                        animate={{ height: 16 }}
+                        transition={{ duration: 0.4, delay: 0.2 }}
+                    ></motion.div>
+                    {title}
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-1 md:gap-1.5">
+                    {fields.map((field) => renderField(field.key, field.value))}
+                </div>
+                <motion.div
+                    className="w-full h-px bg-gray-200 dark:bg-gray-700 mt-3"
+                    initial={{ scaleX: 0, opacity: 0 }}
+                    animate={{ scaleX: 1, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                ></motion.div>
+            </motion.div>
+        ) : (
+            <Skeleton className="h-32" />
+        )
+    }
 
     return (
         <motion.div

@@ -3,7 +3,6 @@ import LanguageSelector from '@/components/template/LanguageSelector'
 import MobileNav from '@/components/template/MobileNav'
 import SideNav from '@/components/template/SideNav'
 import SideNavToggle from '@/components/template/SideNavToggle'
-import SidePanel from '@/components/template/SidePanel'
 import UserDropdown from '@/components/template/UserDropdown'
 import View from '@/views'
 import { memo } from 'react'
@@ -23,7 +22,7 @@ const HeaderActionsEnd = memo(() => {
     return (
         <>
             <LanguageSelector />
-            <SidePanel />
+            {/* <SidePanel /> */}
             <UserDropdown hoverable={false} />
         </>
     )
