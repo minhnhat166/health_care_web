@@ -45,4 +45,13 @@ export const protectedRoutes: Routes = [
             layout: 'modern',
         },
     },
+    // {
+    //     key: 'userDetail',
+    //     path: '/user/:id',
+    //     component: lazy(() => import('@/views/user/detail/UserDetail')),
+    //     authority: [],
+    //     meta: {
+    //         layout: 'modern',
+    //     },
+    // },
 ]

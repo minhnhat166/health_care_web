@@ -18,12 +18,88 @@
         }
     },
     "views": {
+        "user": {
+            "title": "Người dùng",
+            "components": {
+                "columns": {
+                    "no": "STT",
+                    "userId": "ID người dùng",
+                    "name": "Tên",
+                    "email": "Email",
+                    "phoneNumber": "Số điện thoại",
+                    "role": "Vai trò",
+                    "actions": "Hành động"
+                },
+                "buttons": {
+                    "delete": "Xóa",
+                    "cancel": "Hủy",
+                    "details": "Chi tiết",
+                    "edit": "Chỉnh sửa",
+                    "save": "Lưu thay đổi",
+                    "retry": "Thử lại"
+                },
+                "dialog": {
+                    "confirmDeletion": "Xác nhận xóa",
+                    "deleteConfirmation": "Bạn có chắc chắn muốn xóa người dùng này không? Hành động này không thể hoàn tác.",
+                    "editUser": "Chỉnh sửa người dùng"
+                },
+                "toast": {
+                    "error": "Lỗi",
+                    "success": "Thành công",
+                    "errorDeletingUser": "Đã xảy ra lỗi khi xóa người dùng.",
+                    "userUpdatedSuccess": "Cập nhật người dùng thành công",
+                    "errorUpdatingUser": "Đã xảy ra lỗi khi cập nhật người dùng.",
+                    "errorFetchingUserData": "Đã xảy ra lỗi khi lấy dữ liệu chi tiết người dùng."
+                },
+                "loading": {
+                    "fetchingUserData": "Đang tải dữ liệu người dùng..."
+                },
+                "error": {
+                    "failedToLoadUserData": "Không thể tải dữ liệu người dùng. Vui lòng thử lại."
+                },
+                "form": {
+                    "sections": {
+                        "basicInfo": "Thông tin cơ bản",
+                        "contactInfo": "Thông tin liên hệ",
+                        "roleInfo": "Thông tin vai trò"
+                    },
+                    "placeholders": {
+                        "userIdPlaceholder": "ID người dùng (không thể thay đổi)",
+                        "namePlaceholder": "Nhập tên đầy đủ",
+                        "emailPlaceholder": "Nhập địa chỉ email",
+                        "phoneNumberPlaceholder": "Nhập số điện thoại",
+                        "rolePlaceholder": "Nhập vai trò người dùng"
+                    },
+                    "validation": {
+                        "userIdRequired": "ID người dùng là bắt buộc",
+                        "nameRequired": "Tên là bắt buộc",
+                        "emailRequired": "Email là bắt buộc",
+                        "emailInvalid": "Vui lòng nhập địa chỉ email hợp lệ",
+                        "phoneNumberRequired": "Số điện thoại là bắt buộc",
+                        "roleRequired": "Vai trò là bắt buộc"
+                    }
+                },
+                "tooltip": {
+                    "clickToDelete": "Nhấn để xóa",
+                    "clickToEdit": "Nhấn để chỉnh sửa"
+                }
+            },
+            "fields": {
+                "userId": "ID người dùng",
+                "name": "Tên",
+                "email": "Email",
+                "phoneNumber": "Số điện thoại",
+                "role": "Vai trò",
+                "createdAt": "Ngày tạo",
+                "updatedAt": "Ngày cập nhật"
+            }
+        },
         "drug": {
             "title": "Thuốc",
             "components": {
                 "columns": {
                     "no": "STT",
-                    "drugId": "Mã thuốc",
+                    "drugId": "ID thuốc",
                     "drugName": "Tên thuốc",
                     "approvalBatch": "Lô phê duyệt",
                     "decisionNumber": "Số quyết định",
@@ -49,8 +125,8 @@
                     "usageInstructions": "Hướng dẫn sử dụng",
                     "patientUsageInstructions": "Hướng dẫn sử dụng cho bệnh nhân",
                     "drugGroup": "Nhóm thuốc",
-                    "isHidden": "Ẩn",
-                    "rate": "Đánh giá",
+                    "isHidden": "Ẩn khỏi công chúng",
+                    "rate": "Tỷ lệ",
                     "withdrawSdk": "Rút SDK",
                     "fileName": "Tên tệp",
                     "state": "Trạng thái",
@@ -86,7 +162,7 @@
                     "errorDeletingDrug": "Đã xảy ra lỗi khi xóa thuốc.",
                     "drugUpdatedSuccess": "Cập nhật thuốc thành công",
                     "errorUpdatingDrug": "Đã xảy ra lỗi khi cập nhật thuốc.",
-                    "errorFetchingDrugData": "Đã xảy ra lỗi khi tải dữ liệu chi tiết thuốc."
+                    "errorFetchingDrugData": "Đã xảy ra lỗi khi lấy dữ liệu chi tiết thuốc."
                 },
                 "error": {
                     "failedToLoadDrugData": "Không thể tải dữ liệu thuốc. Vui lòng thử lại."
@@ -111,10 +187,21 @@
                         "approvalBatchRequired": "Lô phê duyệt là bắt buộc",
                         "decisionNumberRequired": "Số quyết định là bắt buộc"
                     }
+                },
+                "sections": {
+                    "detail": {
+                        "drugName": "Tên thuốc"
+                    },
+                    "basicInfo": "Thông tin cơ bản",
+                    "manufacturer": "Chi tiết nhà sản xuất",
+                    "usage": "Thông tin sử dụng",
+                    "approval": "Thông tin phê duyệt",
+                    "formulation": "Chi tiết công thức",
+                    "registrationCompany": "Công ty đăng ký"
                 }
             },
             "fields": {
-                "drugId": "Mã thuốc",
+                "drugId": "ID thuốc",
                 "drugName": "Tên thuốc",
                 "approvalBatch": "Lô phê duyệt",
                 "decisionNumber": "Số quyết định",
@@ -143,11 +230,12 @@
                 "isHidden": "Ẩn khỏi công chúng",
                 "withdrawSdk": "Rút SDK",
                 "fileName": "Tên tệp",
-                "images": "Hình ảnh"
+                "images": "Hình ảnh",
+                "rate": "Tỷ lệ"
             },
             "placeholders": {
                 "drugName": "Nhập tên thuốc",
-                "drugId": "Nhập mã thuốc",
+                "drugId": "Nhập ID thuốc",
                 "approvalBatch": "Nhập lô phê duyệt",
                 "decisionNumber": "Nhập số quyết định",
                 "registrationNumber": "Nhập số đăng ký",

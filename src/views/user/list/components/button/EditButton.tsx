@@ -6,9 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaEdit } from 'react-icons/fa'
-import {
-    BasicInfoSection
-} from '../form/form-sections'
+import { BasicInfoSection } from '../form/form-sections'
 import { useUserForm } from '../hooks/useUserForm'
 
 interface EditButtonProps {
@@ -109,7 +107,7 @@ const EditButton = ({
                     <Dialog
                         isOpen={isOpen}
                         onClose={handleClose}
-                        className="overflow-hidden"
+                        className="overflow-hidden translate-y-1/2"
                     >
                         <motion.div
                             initial={{ opacity: 0 }}

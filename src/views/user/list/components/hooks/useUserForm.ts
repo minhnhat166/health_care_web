@@ -25,19 +25,19 @@ interface UseUserFormProps {
 const createValidationSchema = (t: TFunction) =>
     Yup.object().shape({
         userId: Yup.string().required(
-            t('views.drug.components.form.userIdRequired'),
+            t('views.user.components.form.userIdRequired'),
         ),
         name: Yup.string().required(
-            t('views.drug.components.form.nameRequired'),
+            t('views.user.components.form.nameRequired'),
         ),
         email: Yup.string()
-            .email(t('views.drug.components.form.emailInvalid'))
-            .required(t('views.drug.components.form.emailRequired')),
+            .email(t('views.user.components.form.emailInvalid'))
+            .required(t('views.user.components.form.emailRequired')),
         phoneNumber: Yup.string().required(
-            t('views.drug.components.form.phoneNumberRequired'),
+            t('views.user.components.form.phoneNumberRequired'),
         ),
         role: Yup.string().required(
-            t('views.drug.components.form.roleRequired'),
+            t('views.user.components.form.roleRequired'),
         ),
     })
 
@@ -99,11 +99,11 @@ export const useUserForm = ({ id, onSave, onSuccess, t }: UseUserFormProps) => {
     const handleError = useCallback(
         (messageKey: string) => {
             dispatch({ type: 'FETCH_ERROR', payload: messageKey })
-            toast({
-                title: t('views.drug.components.toast.error'),
-                children: t(messageKey),
-                type: 'danger',
-            })
+            // toast({
+            //     title: t('views.user.components.toast.error'),
+            //     children: t(messageKey),
+            //     type: 'danger',
+            // })
         },
         [t, toast],
     )
@@ -123,7 +123,7 @@ export const useUserForm = ({ id, onSave, onSuccess, t }: UseUserFormProps) => {
                 throw new Error('No data returned')
             }
         } catch (error) {
-            handleError('views.drug.components.toast.errorFetchingDrugData')
+            handleError('views.user.components.toast.errorFetchingUserData')
         }
     }, [id, isOpen, handleError])
 
@@ -172,9 +172,9 @@ export const useUserForm = ({ id, onSave, onSuccess, t }: UseUserFormProps) => {
                 if (onSave) onSave(values)
 
                 toast({
-                    title: t('views.drug.components.toast.success'),
+                    title: t('views.user.components.toast.success'),
                     children: t(
-                        'views.drug.components.toast.drugUpdatedSuccess',
+                        'views.user.components.toast.userUpdatedSuccess',
                     ),
                     type: 'success',
                 })
@@ -185,9 +185,9 @@ export const useUserForm = ({ id, onSave, onSuccess, t }: UseUserFormProps) => {
             } catch (error) {
                 dispatch({
                     type: 'SAVE_ERROR',
-                    payload: 'views.drug.components.toast.errorUpdatingDrug',
+                    payload: 'views.user.components.toast.errorUpdatingUser',
                 })
-                handleError('views.drug.components.toast.errorUpdatingDrug')
+                handleError('views.user.components.toast.errorUpdatingUser')
             } finally {
                 setSubmitting(false)
             }
