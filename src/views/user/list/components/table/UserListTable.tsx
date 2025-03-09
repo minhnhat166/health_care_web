@@ -4,6 +4,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { useEffect, useMemo, useRef } from 'react'
 import { getUserList, setMetaData, useAppSelector } from '../../store'
 import DrugColumns from '../columns/UserColumns'
+import { UserRole } from '@/constants/roles.constant'
 
 const UserListTable = () => {
     const tableRef = useRef<DataTableResetHandle>(null)
@@ -14,7 +15,8 @@ const UserListTable = () => {
         (state) => state.userList.items.metadata,
     )
     const data = useAppSelector((state) => state.userList.items.result)
-    const filterData = data.filter((item) => item.role !== 'ADMIN')
+    const filterData = data.filter((item) => item.role !== UserRole.admin)
+    console.log("🚀 ~ UserListTable ~ filterData:", filterData)
     const loading = useAppSelector((state) => state.userList.items.loading)
 
     // columns
