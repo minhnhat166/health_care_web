@@ -1,3 +1,4 @@
+import GoogleSignIn from './GoogleSignIn'
 import SignInForm from './SignInForm'
 
 const SignIn = () => {
@@ -8,6 +9,7 @@ const SignIn = () => {
                 <p>Please enter your credentials to sign in!</p>
             </div>
             <SignInForm disableSubmit={false} />
+            <GoogleSignIn />
         </>
     )
 }

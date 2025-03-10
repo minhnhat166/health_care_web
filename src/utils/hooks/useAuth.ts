@@ -5,7 +5,7 @@ import type {
 } from '@/@types/auth'
 import appConfig from '@/configs/app.config'
 import { REDIRECT_URL_KEY } from '@/constants/app.constant'
-import { apiSignIn, apiSignUp } from '@/services/AuthService'
+import { apiGoogleLogin, apiSignIn, apiSignUp, logOut } from '@/services/AuthService'
 import {
     initialUserState,
     setUser,
@@ -57,6 +57,7 @@ function useAuth() {
         values: SignInCredential,
     ): Promise<BaseGetResponse | undefined> => {
         const { email, password } = values
+        // Encrypt password before sending to server
         // const encryptedPassword = (await encrypt(password)) || ''
         try {
             const response = await apiSignIn({
@@ -69,11 +70,42 @@ function useAuth() {
                     ...response,
                 })
             }
-            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
         } catch (errors: any) {
             return {
                 status: 'failed',
                 message: errors?.response?.data?.message || errors.toString(),
+            }
+        }
+    }
+
+    const googleSignIn = async (tokenId: string) => {
+        try {
+            const response = await apiGoogleLogin({
+                idToken: tokenId,
+            })
+
+            if (response && response.data) {
+                const token = response.data as unknown as string
+                return authenticateUser(token, {
+                    ...response,
+                })
+            } else {
+                return {
+                    status: 'failed',
+                    message: 'Invalid response from server',
+                }
+            }
+        } catch (errors: any) {
+            const errorMessage =
+                errors?.response?.data?.message ||
+                errors?.message ||
+                'Authentication failed'
+            const errorStatus = errors?.response?.status || 500
+
+            return {
+                status: 'failed',
+                message: errorMessage,
+                statusCode: errorStatus,
             }
         }
     }
@@ -107,7 +139,6 @@ function useAuth() {
                     message: '',
                 }
             }
-            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
         } catch (errors: any) {
             return {
                 status: 'failed',
@@ -123,7 +154,7 @@ function useAuth() {
     }
 
     const signOut = async () => {
-        // await apiSignOut()
+        await logOut()
         handleSignOut()
     }
 
@@ -132,6 +163,7 @@ function useAuth() {
         signIn,
         signUp,
         signOut,
+        googleSignIn,
     }
 }
 

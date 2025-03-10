@@ -8,7 +8,7 @@ import axios from 'axios'
 import { createElement } from 'react'
 import store, { persistor, signOutSuccess } from '../store'
 
-const unauthorizedCode = [401]
+const unauthorizedCode = [401, 403]
 
 const BaseService = axios.create({
     baseURL: appConfig.apiPrefix,
@@ -20,9 +20,8 @@ const BaseService = axios.create({
 
 const handleSignOut = async () => {
     try {
-        await store.dispatch(signOutSuccess())
+        store.dispatch(signOutSuccess())
         await persistor.flush()
-
         toast.push(
             createElement(
                 Notification,
