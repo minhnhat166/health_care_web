@@ -5,7 +5,12 @@ import type {
 } from '@/@types/auth'
 import appConfig from '@/configs/app.config'
 import { REDIRECT_URL_KEY } from '@/constants/app.constant'
-import { apiGoogleLogin, apiSignIn, apiSignUp, logOut } from '@/services/AuthService'
+import {
+    apiGoogleLogin,
+    apiSignIn,
+    apiSignUp,
+    logOut,
+} from '@/services/AuthService'
 import {
     initialUserState,
     setUser,
@@ -80,12 +85,12 @@ function useAuth() {
 
     const googleSignIn = async (tokenId: string) => {
         try {
-            const response = await apiGoogleLogin({
+            const response = (await apiGoogleLogin({
                 idToken: tokenId,
-            })
+            })) as { data: { token: string } }
 
             if (response && response.data) {
-                const token = response.data as unknown as string
+                const token = response.data.token
                 return authenticateUser(token, {
                     ...response,
                 })
