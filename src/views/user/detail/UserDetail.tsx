@@ -87,7 +87,7 @@ const UserDetail = () => {
                     className="flex-col items-center justify-center mb-8"
                     variants={breadcrumbVariants}
                 >
-                    <UserDetailBreadcrumb user={userDetail} loading={loading} />
+                    <UserDetailBreadcrumb user={userDetail} />
                 </motion.div>
                 <Loading loading={loading}>
                     {!isEmpty(userDetail) && (

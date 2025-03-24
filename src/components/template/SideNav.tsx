@@ -15,27 +15,26 @@ import { useAppSelector } from '@/store'
 import useResponsive from '@/utils/hooks/useResponsive'
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
-import { HiOutlineHome } from 'react-icons/hi'
-
-const sideNavStyle = {
-    width: SIDE_NAV_WIDTH,
-    minWidth: SIDE_NAV_WIDTH,
-}
-
-const sideNavCollapseStyle = {
-    width: SIDE_NAV_COLLAPSED_WIDTH,
-    minWidth: SIDE_NAV_COLLAPSED_WIDTH,
-}
 
 // Animation variants
 const sideNavVariants = {
     expanded: {
         width: SIDE_NAV_WIDTH,
-        transition: { duration: 0.3, ease: 'easeInOut' },
+        transition: {
+            type: 'spring',
+            stiffness: 800,
+            damping: 45,
+            mass: 0.2,
+        },
     },
     collapsed: {
         width: SIDE_NAV_COLLAPSED_WIDTH,
-        transition: { duration: 0.3, ease: 'easeInOut' },
+        transition: {
+            type: 'spring',
+            stiffness: 800,
+            damping: 45,
+            mass: 0.2,
+        },
     },
 }
 
@@ -43,16 +42,15 @@ const contentVariants = {
     expanded: {
         opacity: 1,
         transition: {
-            delay: 0.15,
-            duration: 0.2,
-            ease: 'easeInOut',
+            duration: 0.06,
+            ease: 'easeOut',
         },
     },
     collapsed: {
         opacity: 0,
         transition: {
-            duration: 0.2,
-            ease: 'easeInOut',
+            duration: 0.04,
+            ease: 'easeIn',
         },
     },
 }
@@ -60,11 +58,19 @@ const contentVariants = {
 const logoVariants = {
     expanded: {
         x: 0,
-        transition: { duration: 0.3, ease: 'easeInOut' },
+        transition: {
+            type: 'spring',
+            stiffness: 1000,
+            damping: 50,
+        },
     },
     collapsed: {
         x: 0,
-        transition: { duration: 0.3, ease: 'easeInOut' },
+        transition: {
+            type: 'spring',
+            stiffness: 1000,
+            damping: 50,
+        },
     },
 }
 
@@ -133,9 +139,7 @@ const SideNav = () => {
                         className="side-nav-header flex items-center justify-center p-4"
                         variants={logoVariants}
                     >
-                        {sideNavCollapse ? (
-                            <HiOutlineHome size={24} />
-                        ) : (
+                        {sideNavCollapse ? null : (
                             <Logo
                                 mode={logoMode()}
                                 type={sideNavCollapse ? 'streamline' : 'full'}
