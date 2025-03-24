@@ -6,7 +6,6 @@ export type ApiGetDrugsResponse = {
     totalPage: number
     currentPage: number
     pageSize: number
-
     data: Drug[]
 }
 
@@ -120,5 +119,131 @@ export const apiGetDrugsTopRated = async () => {
     return await ApiService.fetchData<Drug[]>({
         url: `/api/drugs/top-rated`,
         method: 'get',
+    })
+}
+
+export const apiGetDrugsTopSearched = async () => {
+    return await ApiService.fetchData<Drug[]>({
+        url: `/api/drugs/top-searched`,
+        method: 'get',
+    })
+}
+
+export const apiGetDrugsTopNewRegistered = async () => {
+    return await ApiService.fetchData<Drug[]>({
+        url: `/api/drugs/top-new-registered`,
+        method: 'get',
+    })
+}
+
+export const apiGetDrugsTopWithdrawn = async () => {
+    return await ApiService.fetchData<Drug[]>({
+        url: `/api/drugs/top-withdrawn`,
+        method: 'get',
+    })
+}
+
+export const apiGetDrugsTopCompanies = async () => {
+    return await ApiService.fetchData<Drug[]>({
+        url: `/api/drugs/top-companies`,
+        method: 'get',
+    })
+}
+
+export const apiPostDrugsImageUpload = async <T>(
+    drugId: string,
+    file: File,
+) => {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    return await ApiService.fetchData<T>({
+        url: `/api/drugs/image/${drugId}/upload`,
+        method: 'post',
+        data: formData as any,
+    })
+}
+
+export const apiPutDrugsImageUpdate = async <T>(drugId: string, file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    return await ApiService.fetchData<T>({
+        url: `/api/drugs/image/${drugId}/update`,
+        method: 'put',
+        data: formData as any,
+    })
+}
+
+export const apiGetDrugsImage = async (drugId: string) => {
+    return await ApiService.fetchData<Blob>({
+        url: `/api/drugs/${drugId}/image`,
+        method: 'get',
+    })
+}
+
+export const apiDeleteDrugsImage = async (drugId: string) => {
+    return await ApiService.fetchData<Blob>({
+        url: `/api/drugs/${drugId}/image`,
+        method: 'delete',
+    })
+}
+
+export const apiGetDrugsImages = async (drugId: string) => {
+    return await ApiService.fetchData<Blob[]>({
+        url: `/api/drugs/${drugId}/images`,
+        method: 'get',
+    })
+}
+
+export const apiPutDrugsPDFUpdate = async <T>(drugId: string, file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    return await ApiService.fetchData<T>({
+        url: `/api/drugs/${drugId}/pdf/update`,
+        method: 'put',
+        data: formData as any,
+    })
+}
+
+export const apiPostDrugsPDFUpload = async <T>(drugId: string, file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    return await ApiService.fetchData<T>({
+        url: `/api/drugs/${drugId}/pdf/upload`,
+        method: 'post',
+        data: formData as any,
+    })
+}
+
+export const apiGetDrugsPDF = async (drugId: string) => {
+    return await ApiService.fetchData<Blob>({
+        url: `/api/drugs/${drugId}/pdf`,
+        method: 'get',
+    })
+}
+
+export const apiDeleteDrugsPDF = async (drugId: string) => {
+    return await ApiService.fetchData<Blob>({
+        url: `/api/drugs/${drugId}/pdf`,
+        method: 'delete',
+    })
+}
+
+export const apiGetDrugsFilterGroup = async (
+    group: string,
+    page: number,
+    pageSize: number,
+) => {
+    return await ApiService.fetchData<Drug[]>({
+        url: `/api/drugs/group`,
+        method: 'get',
+        params: {
+            group,
+            page,
+            pageSize,
+        },
     })
 }

@@ -1,6 +1,6 @@
 import { Button, Tooltip } from '@/components/ui'
 import { Dialog } from '@/components/ui/Dialog'
-import { apiDeleteDrugsId } from '@/services/DrugService'
+import { apiDeleteUsersId } from '@/services/UserService'
 import useToast from '@/utils/useToast'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
@@ -30,12 +30,17 @@ const DeleteButton = ({ id, onSuccess, onError }: DeleteButtonProps) => {
     const handleDelete = async () => {
         try {
             setIsDeleting(true)
-            if (id) await apiDeleteDrugsId(id)
+            if (id) await apiDeleteUsersId(id)
             setIsDeleting(false)
             handleCloseConfirm()
-            if (onSuccess) {
-                onSuccess()
-            }
+            toast({
+                title: t('views.user.components.toast.success', 'Success'),
+                children: t(
+                    'views.user.components.toast.userDeleted',
+                    'User deleted successfully.',
+                ),
+                type: 'success',
+            })
         } catch (error) {
             setIsDeleting(false)
             if (onError) {
@@ -119,46 +124,39 @@ const DeleteButton = ({ id, onSuccess, onError }: DeleteButtonProps) => {
                             'Are you sure you want to delete this user? This action cannot be undone.',
                         )}
                     </p>
-                    <Tooltip
-                        title={t(
-                            'views.user.components.tooltip.clickToDelete',
-                            'Click to delete',
-                        )}
-                        wrapperClass="flex justify-between flex-auto gap-4"
+
+                    <motion.div
+                        variants={buttonVariants}
+                        whileHover="hover"
+                        whileTap="tap"
                     >
-                        <motion.div
-                            variants={buttonVariants}
-                            whileHover="hover"
-                            whileTap="tap"
+                        <Button
+                            variant="default"
+                            onClick={handleCloseConfirm}
+                            disabled={isDeleting}
                         >
-                            <Button
-                                variant="default"
-                                onClick={handleCloseConfirm}
-                                disabled={isDeleting}
-                            >
-                                {t(
-                                    'views.user.components.buttons.cancel',
-                                    'Cancel',
-                                )}
-                            </Button>
-                        </motion.div>
-                        <motion.div
-                            variants={buttonVariants}
-                            whileHover="hover"
-                            whileTap="tap"
+                            {t(
+                                'views.user.components.buttons.cancel',
+                                'Cancel',
+                            )}
+                        </Button>
+                    </motion.div>
+                    <motion.div
+                        variants={buttonVariants}
+                        whileHover="hover"
+                        whileTap="tap"
+                    >
+                        <Button
+                            variant="solid"
+                            onClick={handleDelete}
+                            loading={isDeleting}
                         >
-                            <Button
-                                variant="solid"
-                                onClick={handleDelete}
-                                loading={isDeleting}
-                            >
-                                {t(
-                                    'views.user.components.buttons.delete',
-                                    'Delete',
-                                )}
-                            </Button>
-                        </motion.div>
-                    </Tooltip>
+                            {t(
+                                'views.user.components.buttons.delete',
+                                'Delete',
+                            )}
+                        </Button>
+                    </motion.div>
                 </motion.div>
             </Dialog>
         </>

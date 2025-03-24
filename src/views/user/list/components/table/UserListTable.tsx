@@ -16,7 +16,6 @@ const UserListTable = () => {
     )
     const data = useAppSelector((state) => state.userList.items.result)
     const filterData = data.filter((item) => item.role !== UserRole.admin)
-    console.log("🚀 ~ UserListTable ~ filterData:", filterData)
     const loading = useAppSelector((state) => state.userList.items.loading)
 
     // columns

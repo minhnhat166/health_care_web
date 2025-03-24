@@ -4,13 +4,9 @@ export const apiGetUsers = async <T, U extends Record<string, unknown>>({
     page,
     pageSize,
 }: U) => {
-    return await ApiService.fetchData<T>({
-        url: `/api/users`,
-        method: 'get',
-        params: {
-            page,
-            pageSize,
-        },
+    return await ApiService.get<T>(`https://be2.bellybabe.site/api/users/`, {
+        page,
+        pageSize,
     })
 }
 
@@ -47,10 +43,10 @@ export const apiPutUsersId = async <T, U extends Record<string, unknown>>(
 export const apiDeleteUsersId = async <T, U extends Record<string, unknown>>(
     id: string,
 ) => {
-    return await ApiService.fetchData<T>({
-        url: `/api/users/${id}`,
-        method: 'delete',
-    })
+    return await ApiService.delete<T>(
+        `https://be2.bellybabe.site/api/users/${id}`,
+        {},
+    )
 }
 
 export const apiGetUsersSearch = async <T, U extends Record<string, unknown>>(
