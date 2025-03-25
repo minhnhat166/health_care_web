@@ -125,7 +125,7 @@
                     "usageInstructions": "Usage Instructions",
                     "patientUsageInstructions": "Patient Usage Instructions",
                     "drugGroup": "Drug Group",
-                    "isHidden": "Is Hidden",
+                    "isHidden": "Hidden",
                     "rate": "Rate",
                     "withdrawSdk": "Withdraw SDK",
                     "fileName": "File Name",
@@ -175,7 +175,8 @@
                         "approval": "Approval Information",
                         "formulation": "Formulation Details",
                         "registrationCompany": "Registration Company",
-                        "additionalInfo": "Additional Information"
+                        "additionalInfo": "Additional Information",
+                        "images": "Images"
                     },
                     "placeholders": {
                         "enterDrugName": "Enter drug name",
@@ -274,6 +275,21 @@
                 "otc": "Over-the-counter",
                 "controlled": "Controlled substance"
             }
+        },
+        "dashboard": {
+            "title": "Medication Dashboard",
+            "lastUpdated": "Last updated:",
+            "refresh": "Refresh",
+            "medicationDetails": "Medication Details",
+            "prescriptions": "prescriptions",
+            "prescriptionDistribution": "Prescription Distribution",
+            "bar": "Bar",
+            "line": "Line",
+            "favoriteMedications": "Favorite Medications",
+            "totalUsers": "Total Users",
+            "totalMedications": "Total Medications",
+            "totalCompanies": "Total Companies",
+            "mostPopular": "Most Popular"
         }
     }
 }

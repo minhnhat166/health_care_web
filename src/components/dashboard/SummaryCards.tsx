@@ -1,5 +1,6 @@
 import type { MedicationItem } from '@/utils/hooks/useDashboardData'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface SummaryCardsProps {
     totalPrescriptions: number
@@ -25,6 +26,8 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({
     loading = false,
     trends = {},
 }) => {
+    const { t } = useTranslation()
+
     const renderTrend = (value?: number) => {
         if (value === undefined) return null
 
@@ -74,46 +77,11 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-            {/* <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-blue-500 transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <p className="text-gray-500 text-sm mb-1 font-medium">
-                            Total Prescriptions
-                        </p>
-                        {loading ? (
-                            <LoadingSkeleton />
-                        ) : (
-                            <>
-                                <h2 className="text-3xl font-bold text-gray-800">
-                                    {totalPrescriptions}
-                                </h2>
-                                {renderTrend(trends.prescriptions)}
-                            </>
-                        )}
-                    </div>
-                    <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 text-blue-500"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                            />
-                        </svg>
-                    </div>
-                </div>
-            </div> */}
             <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-purple-500 transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                 <div className="flex items-center justify-between">
                     <div>
                         <p className="text-gray-500 text-sm mb-1 font-medium">
-                            Total Users
+                            {t('views.dashboard.totalUsers')}
                         </p>
                         {loading ? (
                             <LoadingSkeleton />
@@ -149,7 +117,7 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({
                 <div className="flex items-center justify-between">
                     <div>
                         <p className="text-gray-500 text-sm mb-1 font-medium">
-                            Total Medications
+                            {t('views.dashboard.totalMedications')}
                         </p>
                         {loading ? (
                             <LoadingSkeleton />
@@ -184,7 +152,7 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({
                 <div className="flex items-center justify-between">
                     <div>
                         <p className="text-gray-500 text-sm mb-1 font-medium">
-                            Total Companies
+                            {t('views.dashboard.totalCompanies')}
                         </p>
                         {loading ? (
                             <LoadingSkeleton />
@@ -219,7 +187,7 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({
                 <div className="flex items-center justify-between">
                     <div>
                         <p className="text-gray-500 text-sm mb-1 font-medium">
-                            Most Popular
+                            {t('views.dashboard.mostPopular')}
                         </p>
                         {loading ? (
                             <LoadingSkeleton />
@@ -229,7 +197,7 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({
                                     {popularMedication.name}
                                 </h3>
                                 {/* <p className="text-sm text-gray-600 mt-1">
-                                    {popularMedication.count} prescriptions
+                                    {popularMedication.count} {t('views.dashboard.prescriptions')}
                                 </p> */}
                             </>
                         )}

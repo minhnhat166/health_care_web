@@ -13,7 +13,7 @@ function DrugList() {
     return (
         <AdaptableCard className="h-full" bodyClass="h-full">
             <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
-                <div className="xl:col-span-4">
+                <div className="xl:col-span-5">
                     <div className="flex justify-between items-center space-x-2">
                         <div className="flex items-center space-x-2 mb-2">
                             <h3>{t('views.drug.title')}</h3>

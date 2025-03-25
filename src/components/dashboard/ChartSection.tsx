@@ -2,6 +2,7 @@ import { getBarChartOptions, getPieChartOptions } from '@/config/chartConfig'
 import type { MedicationItem } from '@/utils/hooks/useDashboardData'
 import React, { useState } from 'react'
 import ReactApexChart from 'react-apexcharts'
+import { useTranslation } from 'react-i18next'
 
 interface ChartSectionProps {
     medicationData: MedicationItem[]
@@ -12,6 +13,7 @@ const ChartSection: React.FC<ChartSectionProps> = ({
     medicationData,
     loading = false,
 }) => {
+    const { t } = useTranslation()
     const [chartType, setChartType] = useState<'bar' | 'line'>('bar')
 
     const barChartOptions = getBarChartOptions(medicationData)
@@ -49,7 +51,7 @@ const ChartSection: React.FC<ChartSectionProps> = ({
                                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                             />
                         </svg>
-                        Prescription Distribution
+                        {t('views.dashboard.prescriptionDistribution')}
                     </h3>
                     <div className="flex space-x-2">
                         <button
@@ -60,7 +62,7 @@ const ChartSection: React.FC<ChartSectionProps> = ({
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                         >
-                            Bar
+                            {t('views.dashboard.bar')}
                         </button>
                         <button
                             onClick={() => handleChartTypeChange('line')}
@@ -70,7 +72,7 @@ const ChartSection: React.FC<ChartSectionProps> = ({
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                         >
-                            Line
+                            {t('views.dashboard.line')}
                         </button>
                     </div>
                 </div>
@@ -111,7 +113,7 @@ const ChartSection: React.FC<ChartSectionProps> = ({
                             d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
                         />
                     </svg>
-                    Favorite Medications
+                    {t('views.dashboard.favoriteMedications')}
                 </h3>
                 <div className="h-80 relative">
                     {loading ? (

@@ -9,6 +9,7 @@ import {
 import { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 
 export interface MedicationItem {
+    drugId?: string
     name: string
     count: number
     company: string
@@ -32,6 +33,7 @@ export const useDashboardData = () => {
     const medicationData = useMemo(
         () =>
             (mostPopularDrugs || []).map((drug) => ({
+                drugId: drug.drugId || '',
                 name: drug.tenThuoc || '',
                 count: drug.searchCount || 0,
                 company: drug.congTySx || '',
@@ -48,6 +50,7 @@ export const useDashboardData = () => {
         () =>
             mostPopularDrug
                 ? {
+                      drugId: mostPopularDrug.drugId || '',
                       name: mostPopularDrug.tenThuoc || '',
                       count: mostPopularDrug.searchCount || 0,
                       company: mostPopularDrug.congTySx || '',
@@ -76,8 +79,8 @@ export const useDashboardData = () => {
             isFetchingRef.current = true
             setIsLoading(true)
             await Promise.all([
-                dispatch(getUserList({ page: 1, pageSize: 10 })),
-                dispatch(getDrugList({ page: 1, pageSize: 10 })),
+                dispatch(getUserList({ page: 1, pageSize: 999999 })),
+                dispatch(getDrugList({ page: 1, pageSize: 999999 })),
                 dispatch(getCompanyList()),
                 dispatch(getDrugTopSearchedList()),
             ])

@@ -1,5 +1,5 @@
 import { DataTable, type DataTableResetHandle } from '@/components/shared'
-import { useAppDispatch, useAppSelector as useMainAppSelector } from '@/store'
+import { useAppDispatch } from '@/store'
 import cloneDeep from 'lodash/cloneDeep'
 import { useEffect, useMemo, useRef } from 'react'
 import { getApiDrugs, setTableData, useAppSelector } from '../../store'

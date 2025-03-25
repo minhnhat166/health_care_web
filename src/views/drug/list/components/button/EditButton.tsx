@@ -50,7 +50,7 @@ const EditButton = ({
 
     const renderButtons = useCallback(
         ({ isSubmitting }: any) => (
-            <div className="flex justify-end gap-2 mt-6 col-span-1 md:col-span-2">
+            <div className="flex flex-auto justify-end gap-2 mt-6 col-span-2">
                 <Button
                     variant="plain"
                     onClick={handleClose}
@@ -114,6 +114,7 @@ const EditButton = ({
                         isOpen={isOpen}
                         onClose={handleClose}
                         className="overflow-hidden"
+                        width={800}
                     >
                         <motion.div
                             initial={{ opacity: 0 }}

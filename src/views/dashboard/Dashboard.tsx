@@ -6,10 +6,12 @@ import { Button } from '@/components/ui'
 import { injectReducer } from '@/store'
 import { useDashboardData } from '@/utils/hooks/useDashboardData'
 import reducer, { SLICE_NAME } from './store'
+import { useTranslation } from 'react-i18next'
 
 injectReducer(SLICE_NAME, reducer)
 
 const Dashboard = () => {
+    const { t } = useTranslation()
     const {
         medicationData,
         totalPrescriptions,
@@ -34,11 +36,12 @@ const Dashboard = () => {
         <div className="max-w-7xl mx-auto px-4 py-6 min-h-screen">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                 <h1 className="text-3xl font-bold text-gray-800 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-1 after:w-24 after:bg-purple-600 after:rounded-full">
-                    Medication Dashboard
+                    {t('views.dashboard.title')}
                 </h1>
                 <div className="flex items-center gap-4">
                     <p className="text-sm text-gray-500">
-                        Last updated: {lastUpdated.toLocaleString()}
+                        {t('views.dashboard.lastUpdated')}{' '}
+                        {lastUpdated.toLocaleString()}
                     </p>
                     <Button
                         onClick={handleRefresh}
@@ -55,7 +58,7 @@ const Dashboard = () => {
                         >
                             ↻
                         </span>
-                        Refresh
+                        {t('views.dashboard.refresh')}
                     </Button>
                 </div>
             </div>
