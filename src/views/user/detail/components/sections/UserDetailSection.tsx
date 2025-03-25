@@ -77,18 +77,26 @@ const UserDetailSection = ({ user }: UserDetailSectionProps) => {
         <motion.div
             key={fieldKey}
             variants={itemVariants}
-            className="bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900 dark:to-indigo-950 
-                       border border-indigo-100 dark:border-indigo-800 
-                       rounded-lg p-3 shadow-sm hover:shadow-md 
-                       transition-all duration-300 transform hover:-translate-y-1"
+            className="bg-white dark:bg-gray-800 
+                       border border-gray-100 dark:border-gray-700
+                       rounded-lg overflow-hidden shadow-sm
+                       transition-all duration-300 hover:shadow-md hover:border-indigo-200 dark:hover:border-indigo-700
+                       group"
         >
-            <div className="text-xs font-semibold text-indigo-600 dark:text-indigo-300 uppercase tracking-wider mb-1">
-                {t(`views.user.fields.${fieldKey}`)}
-            </div>
-            <div className="text-sm font-bold text-gray-800 dark:text-gray-200 break-words">
-                {value || (
-                    <span className="text-gray-400 italic">Not specified</span>
-                )}
+            <div className="flex items-stretch">
+                <div className="bg-indigo-500 dark:bg-indigo-600 w-2 group-hover:w-3 transition-all duration-300"></div>
+                <div className="flex-1 p-4">
+                    <div className="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-1 font-medium">
+                        {t(`views.user.fields.${fieldKey}`)}
+                    </div>
+                    <div className="text-gray-800 dark:text-gray-200 font-medium">
+                        {value || (
+                            <span className="text-gray-400 dark:text-gray-500 font-normal">
+                                Not available
+                            </span>
+                        )}
+                    </div>
+                </div>
             </div>
         </motion.div>
     )
@@ -99,24 +107,23 @@ const UserDetailSection = ({ user }: UserDetailSectionProps) => {
     ) => {
         return title ? (
             <motion.div
-                className="space-y-4"
+                className="space-y-5"
                 variants={sectionVariants}
                 initial="hidden"
                 animate="visible"
             >
-                <h3
-                    className="text-lg font-extrabold text-indigo-700 dark:text-indigo-300 
-                               flex items-center gap-2 border-b pb-2 border-indigo-200 dark:border-indigo-800"
-                >
-                    <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
-                    {title}
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="border-b border-gray-200 dark:border-gray-700 pb-2">
+                    <h3 className="text-xl font-semibold text-indigo-700 dark:text-indigo-400">
+                        {title}
+                        <div className="mt-1 h-1 w-12 bg-indigo-500 rounded-full"></div>
+                    </h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {fields.map((field) => renderField(field.key, field.value))}
                 </div>
             </motion.div>
         ) : (
-            <Skeleton className="h-40 bg-gray-100 dark:bg-gray-800" />
+            <Skeleton className="h-40 bg-gray-100 dark:bg-gray-800 rounded-lg" />
         )
     }
 
@@ -125,17 +132,17 @@ const UserDetailSection = ({ user }: UserDetailSectionProps) => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="p-4 max-w-full"
+            className="p-6 max-w-full"
         >
             <motion.div variants={cardVariants}>
                 <Card
-                    className="border-2 border-indigo-100 dark:border-indigo-900 
+                    className="border border-gray-200 dark:border-gray-700 
                                rounded-xl overflow-hidden 
-                               shadow-2xl hover:shadow-3xl 
-                               transition-shadow duration-500"
+                               shadow-md
+                               bg-white dark:bg-gray-900"
                     bodyClass="p-0"
                 >
-                    <div className="p-6 bg-white dark:bg-gray-900">
+                    <div className="p-6">
                         {renderSection(
                             t('views.user.components.form.sections.basicInfo'),
                             basicInfo,

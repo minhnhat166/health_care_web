@@ -175,7 +175,8 @@
                         "approval": "Thông tin phê duyệt",
                         "formulation": "Chi tiết công thức",
                         "registrationCompany": "Công ty đăng ký",
-                        "additionalInfo": "Thông tin bổ sung"
+                        "additionalInfo": "Thông tin bổ sung",
+                        "images": "Hình ảnh"
                     },
                     "placeholders": {
                         "enterDrugName": "Nhập tên thuốc",
@@ -274,6 +275,21 @@
                 "otc": "Thuốc không kê đơn",
                 "controlled": "Chất kiểm soát"
             }
+        },
+        "dashboard": {
+            "title": "Bảng điều khiển Thuốc",
+            "lastUpdated": "Cập nhật lần cuối:",
+            "refresh": "Làm mới",
+            "medicationDetails": "Chi tiết Thuốc",
+            "prescriptions": "đơn thuốc",
+            "prescriptionDistribution": "Phân phối Đơn thuốc",
+            "bar": "Cột",
+            "line": "Đường",
+            "favoriteMedications": "Thuốc Yêu thích",
+            "totalUsers": "Tổng số Người dùng",
+            "totalMedications": "Tổng số Thuốc",
+            "totalCompanies": "Tổng số Công ty",
+            "mostPopular": "Phổ biến nhất"
         }
     }
 }

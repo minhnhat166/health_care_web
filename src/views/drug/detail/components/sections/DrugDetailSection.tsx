@@ -1,7 +1,10 @@
 import type { Drug } from '@/@types/drug'
 import { Card, Skeleton } from '@/components/ui'
 import { motion } from 'framer-motion'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import 'react-quill/dist/quill.snow.css'
+import FileViewerSection from './FileViewSections'
 
 // Simplified animation variants
 const containerVariants = {
@@ -21,9 +24,88 @@ const itemVariants = {
     },
 }
 
+// Rich Text Viewer component
+const RichTextViewer = ({ content }: { content: string }) => {
+    // This function checks if the content is HTML or plain text
+    const isHTML = useMemo(() => {
+        return /<\/?[a-z][\s\S]*>/i.test(content)
+    }, [content])
+
+    return (
+        <div className="rich-text-viewer">
+            {isHTML ? (
+                <div
+                    className="ql-viewer"
+                    dangerouslySetInnerHTML={{ __html: content }}
+                />
+            ) : (
+                <p className="text-xs text-gray-700 dark:text-gray-300">
+                    {content}
+                </p>
+            )}
+        </div>
+    )
+}
+
 interface DrugDetailSectionProps {
     drug: Partial<Drug>
 }
+
+// Section title component for consistent styling
+const SectionTitle = ({ title }: { title: string }) => (
+    <h3 className="font-semibold text-sm text-primary-600 dark:text-primary-400 mb-2 flex items-center">
+        <motion.div
+            className="w-1 h-4 bg-primary-500 rounded-full mr-1.5"
+            initial={{ height: 0 }}
+            animate={{ height: 16 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+        ></motion.div>
+        {title}
+    </h3>
+)
+
+// Usage instructions section
+const UsageSection = ({ content }: { content: string }) => (
+    <motion.div variants={itemVariants} className="mb-3 last:mb-0">
+        <SectionTitle
+            title={useTranslation().t('views.drug.form.sections.usage')}
+        />
+        <div className="prose-sm max-w-none dark:prose-invert p-2 bg-gray-50 dark:bg-gray-800/50 rounded border border-gray-100 dark:border-gray-800">
+            <RichTextViewer content={content} />
+        </div>
+        <motion.div
+            className="w-full h-px bg-gray-200 dark:bg-gray-700 mt-3"
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+        ></motion.div>
+    </motion.div>
+)
+
+// Images section component
+const ImagesSection = ({ images }: { images: string }) => (
+    <motion.div variants={itemVariants} className="mb-3 last:mb-0">
+        <SectionTitle
+            title={useTranslation().t(
+                'views.drug.components.form.sections.images',
+            )}
+        />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            <img
+                src={images}
+                alt={`Drug Image`}
+                className="w-full h-auto rounded-lg shadow-sm cursor-pointer hover:shadow-md transition-shadow duration-300"
+                onClick={() => window.open(images, '_blank')}
+            />
+        </div>
+        <motion.div
+            className="w-full h-px bg-gray-200 dark:bg-gray-700 mt-3"
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+        ></motion.div>
+    </motion.div>
+)
 
 const DrugDetailSection = ({ drug }: DrugDetailSectionProps) => {
     const { t } = useTranslation()
@@ -113,7 +195,7 @@ const DrugDetailSection = ({ drug }: DrugDetailSectionProps) => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="max-w-full"
+            className="max-w-full space-y-8"
         >
             <Card
                 className="border dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300"
@@ -136,22 +218,13 @@ const DrugDetailSection = ({ drug }: DrugDetailSectionProps) => {
                         t('views.drug.components.form.sections.manufacturer'),
                         manufacturerInfo,
                     )}
-
-                    {drug.huongDanSuDung && (
-                        <motion.div variants={itemVariants} className="mb-2">
-                            <h3 className="font-semibold text-sm text-primary-600 dark:text-primary-400 mb-2 flex items-center">
-                                <div className="w-1 h-4 bg-primary-500 rounded-full mr-1.5"></div>
-                                {t('views.drug.form.sections.usage')}
-                            </h3>
-                            <div className="prose-sm max-w-none dark:prose-invert p-2 bg-gray-50 dark:bg-gray-800/50 rounded border border-gray-100 dark:border-gray-800">
-                                <p className="text-xs text-gray-700 dark:text-gray-300">
-                                    {drug.huongDanSuDung}
-                                </p>
-                            </div>
-                        </motion.div>
-                    )}
                 </div>
             </Card>
+            {drug.huongDanSuDung && (
+                <UsageSection content={drug.huongDanSuDung} />
+            )}
+            {drug.images && <ImagesSection images={drug.images} />}
+            {drug.fileName && <FileViewerSection fileName={drug.fileName} />}
         </motion.div>
     )
 }

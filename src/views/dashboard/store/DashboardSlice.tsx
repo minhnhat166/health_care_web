@@ -237,8 +237,8 @@ export const dashboardSlice = createSlice({
                 (a, b) => (b.searchCount || 0) - (a.searchCount || 0),
             )
 
-            // Set the most popular drugs (top 5 or all if less than 20)
-            state.mostPopularDrugs = sortedDrugs.slice(0, 20)
+            // Set the most popular drugs (top 5 or all if less than 10)
+            state.mostPopularDrugs = sortedDrugs.slice(0, 10)
 
             // Set the single most popular drug
             state.mostPopularDrug =

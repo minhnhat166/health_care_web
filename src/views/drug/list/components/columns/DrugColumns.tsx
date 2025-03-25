@@ -2,6 +2,8 @@ import type { Drug } from '@/@types/drug'
 import ContentCell from '@/components/ui/Cell/ContentCell'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
+import StateCell from '../cell/StateCell'
+import StatusCell from '../cell/StatusCell'
 import ActionColumn from './ActionsColumn'
 
 const DrugColumns = (page: number, limit: number): ColumnDef<Drug>[] => {
@@ -74,6 +76,28 @@ const DrugColumns = (page: number, limit: number): ColumnDef<Drug>[] => {
             id: 'pheDuyet',
             cell: (props) => {
                 return <ContentCell content={props.row.original.pheDuyet} />
+            },
+        },
+        {
+            header: () => (
+                <p className="text-pretty">
+                    {t('views.drug.components.columns.isHidden')}
+                </p>
+            ),
+            id: 'isHide',
+            cell: (props) => {
+                return <StatusCell status={props.row.original.isHide} />
+            },
+        },
+        {
+            header: () => (
+                <p className="text-pretty">
+                    {t('views.drug.components.columns.state')}
+                </p>
+            ),
+            id: 'state',
+            cell: (props) => {
+                return <StateCell state={props.row.original.state} />
             },
         },
         {
