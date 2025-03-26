@@ -12,14 +12,14 @@ const StatusCell = ({ status }: StatusCellProps) => {
                 color: 'emerald',
                 text: 'Hidden',
                 icon: <FaCheckCircle color="#52c41a" />,
-                tooltip: 'Currently is hidden',
+                tooltip: 'Currently hidden',
             }
         } else {
             return {
                 color: 'red',
                 text: 'Active',
                 icon: <FaTimesCircle color="#f5222d" />,
-                tooltip: 'Currently is active',
+                tooltip: 'Currently active',
             }
         }
     }

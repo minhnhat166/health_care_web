@@ -176,7 +176,6 @@ export const useDrugForm = ({
         dispatch({ type: 'FETCH_START' })
         try {
             const response = await apiGetDrugsId(drugId)
-            console.log('🚀 ~ fetchDrugData ~ response:', response)
             if (response?.data) {
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data })
             } else {
