@@ -85,7 +85,11 @@ const UserColumns = (page: number, limit: number): ColumnDef<User>[] => {
             id: 'actions',
             enablePinning: true,
             cell: (props) => {
-                return <ActionColumn id={props.row.original.userId} />
+                return (
+                    <div className="flex items-start gap-4 flex-auto flex-col py-1">
+                        <ActionColumn id={props.row.original.userId} />
+                    </div>
+                )
             },
         },
     ]

@@ -1,9 +1,11 @@
 import type { Drug } from '@/@types/drug'
 import { apiGetDrugsId, apiPutDrugsId } from '@/services/DrugService'
+import { useAppDispatch } from '@/store'
 import useToast from '@/utils/useToast'
 import { TFunction } from 'i18next'
 import { useCallback, useEffect, useMemo, useReducer } from 'react'
 import * as Yup from 'yup'
+import { getApiDrugs } from '../../store'
 
 export const EDITABLE_FIELDS = [
     'tenThuoc',
@@ -153,6 +155,7 @@ export const useDrugForm = ({
     onSuccess,
     t,
 }: UseDrugFormProps) => {
+    const dispatcher = useAppDispatch()
     const [state, dispatch] = useReducer(formReducer, initialState)
     const { isOpen, drugData, isLoading, isSaving, error } = state
 
@@ -246,7 +249,8 @@ export const useDrugForm = ({
                 })
 
                 dispatch({ type: 'SAVE_SUCCESS' })
-                if (onSuccess) onSuccess()
+
+                dispatcher(getApiDrugs({ page: 1, pageSize: 10 }))
                 handleClose()
             } catch (error) {
                 dispatch({

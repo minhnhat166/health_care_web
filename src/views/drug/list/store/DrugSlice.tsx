@@ -79,6 +79,7 @@ export const getApiDrugs = createAsyncThunk<
                 page: page,
                 pageSize: pageSize,
             })
+            console.log('🚀 ~ response.data:', response.data)
             return response.data
         } catch (error: any) {
             if (error.response?.data) {
@@ -95,13 +96,21 @@ export const getApiDrugs = createAsyncThunk<
 export type DrugFilterRequest = {
     page: number
     pageSize: number
-    Status?: string | null // Changed to string | null for consistency
-    Category?: string | null // Changed to string | null for consistency
-    Group?: string | null // Changed to string | null for consistency
+    Status?: string | null
+    Category?: string | null
+    Group?: string | null
+}
+
+export type DrugFilterResponse = {
+    total: number
+    totalPage: number
+    page: number
+    pageSize: number
+    data: Drug[]
 }
 
 export const getDrugsFilter = createAsyncThunk<
-    ApiGetDrugsResponse,
+    DrugFilterResponse,
     DrugFilterRequest
 >(
     `${SLICE_NAME}/getDrugsFilter`,
@@ -120,7 +129,6 @@ export const getDrugsFilter = createAsyncThunk<
             const requestPayload: DrugFilterRequest = {
                 page,
                 pageSize,
-                // Convert null to undefined to avoid sending null values in requests
                 ...(Status !== null && Status !== undefined ? { Status } : {}),
                 ...(Category !== null && Category !== undefined
                     ? { Category }
@@ -129,11 +137,11 @@ export const getDrugsFilter = createAsyncThunk<
             }
 
             const response = await apiGetDrugsFilter<
-                ApiGetDrugsResponse,
+                DrugFilterResponse,
                 DrugFilterRequest
             >(requestPayload)
+            console.log('🚀 ~ response:', response.data)
 
-            // Ensure only response.data is returned
             return response.data
         } catch (error: any) {
             if (error.response?.data) {
@@ -195,20 +203,19 @@ export const DrugSlice = createSlice({
                 state.error = action.payload as unknown as Error
             })
 
-        builder
             .addCase(getDrugsFilter.pending, (state) => {
                 state.loading = true
             })
             .addCase(getDrugsFilter.fulfilled, (state, action) => {
                 state.loading = false
-
-                state.result = action.payload.data || []
+                state.result = action.payload.data
 
                 state.metadata = {
-                    page: action.payload.currentPage || 1,
-                    pageSize: action.payload.pageSize || 10,
-                    totalPage: action.payload.totalPage || 0,
-                    totalElement: action.payload.totalElement || 0,
+                    ...state.metadata,
+                    page: action.payload.page,
+                    pageSize: action.payload.pageSize,
+                    totalPage: action.payload.totalPage,
+                    totalElement: action.payload.total,
                 }
             })
             .addCase(getDrugsFilter.rejected, (state, action) => {
