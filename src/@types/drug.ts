@@ -21,7 +21,7 @@ export type Drug = {
     congTyDk: string
     nuocDk: string
     diaChiDk: string
-    giaKeKhai: string | null
+    giaKeKhai: number | null
     huongDanSuDung: string | null
     huongDanSuDungBn: string | null
     nhomThuoc: string

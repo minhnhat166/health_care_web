@@ -3,7 +3,7 @@ import useResponsive from '@/utils/hooks/useResponsive'
 import { useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { HiOutlineFilter } from 'react-icons/hi'
-import QRBoxTableFilterForm from '../form/QRBoxTableFilterForm'
+import DrugTableFilterForm from '../form/DrugTableFilterForm'
 
 interface FilterDrawerProps {
     title: string
@@ -20,7 +20,7 @@ const FilterDrawer = ({ isOpen, onClose, title }: FilterDrawerProps) => {
             onClose={onClose}
             onRequestClose={onClose}
         >
-            <QRBoxTableFilterForm onFilterComplete={onClose} />
+            <DrugTableFilterForm onFilterComplete={onClose} />
         </Drawer>
     )
 }
@@ -56,7 +56,6 @@ const DrugTableTools = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [larger.xl])
-
     const openFilterDrawer = () => setIsFilterOpen(true)
     const closeFilterDrawer = () => setIsFilterOpen(false)
 
@@ -75,19 +74,15 @@ const DrugTableTools = () => {
                     icon={<HiOutlineFilter />}
                     onClick={openFilterDrawer}
                 >
-                    {t(
-                        'transactions.transactionList.transactionTableTools.filterDrawer.filterButton',
-                    )}
+                    {t('views.drug.filter.filterDrawer.filterButton')}
                 </Button>
             )}
             {/* If screen bigger than 1280 */}
             {larger.xl ? (
-                <QRBoxTableFilterForm />
+                <DrugTableFilterForm />
             ) : (
                 <FilterDrawer
-                    title={t(
-                        'transactions.transactionList.transactionTableTools.filterDrawer.title',
-                    )}
+                    title={t('views.drug.filter.filterDrawer.title')}
                     isOpen={isFilterOpen}
                     onClose={closeFilterDrawer}
                 />

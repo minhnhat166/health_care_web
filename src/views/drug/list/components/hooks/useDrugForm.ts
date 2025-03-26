@@ -33,6 +33,7 @@ export const EDITABLE_FIELDS = [
     'rate',
     'rutSdk',
     'fileName',
+    'isHide',
     'state',
     'images',
 ] as const
@@ -92,6 +93,7 @@ const createValidationSchema = (t: TFunction) =>
         rate: Yup.number(),
         rutSdk: Yup.string(),
         fileName: Yup.string(),
+        isHide: Yup.boolean(),
         state: Yup.string(),
         images: Yup.array().of(Yup.string()),
     })
@@ -174,6 +176,7 @@ export const useDrugForm = ({
         dispatch({ type: 'FETCH_START' })
         try {
             const response = await apiGetDrugsId(drugId)
+            console.log('🚀 ~ fetchDrugData ~ response:', response)
             if (response?.data) {
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data })
             } else {
