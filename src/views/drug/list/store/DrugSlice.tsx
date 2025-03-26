@@ -79,7 +79,6 @@ export const getApiDrugs = createAsyncThunk<
                 page: page,
                 pageSize: pageSize,
             })
-            console.log('🚀 ~ response.data:', response.data)
             return response.data
         } catch (error: any) {
             if (error.response?.data) {
@@ -140,7 +139,6 @@ export const getDrugsFilter = createAsyncThunk<
                 DrugFilterResponse,
                 DrugFilterRequest
             >(requestPayload)
-            console.log('🚀 ~ response:', response.data)
 
             return response.data
         } catch (error: any) {
