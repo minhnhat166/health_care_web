@@ -28,7 +28,29 @@ export const apiGetDrugs = async <T, U extends Record<string, unknown>>({
     })
 }
 
-export const apiPostDrugs = async (data: Drug) => {
+export const apiGetDrugsFilter = async <T, U extends Record<string, unknown>>({
+    page,
+    pageSize,
+    Status,
+    Category,
+    Group,
+}: U) => {
+    return await ApiService.fetchData<T>({
+        url: `/api/drugs/filter`,
+        method: 'get',
+        params: {
+            page,
+            pageSize,
+            Status,
+            Category,
+            Group,
+        },
+    })
+}
+
+export const apiPostDrugs = async (
+    data: Omit<Drug, 'drugId' | 'createdAt' | 'updatedAt'>,
+) => {
     return await ApiService.fetchData<Drug>({
         url: `/api/drugs`,
         method: 'post',

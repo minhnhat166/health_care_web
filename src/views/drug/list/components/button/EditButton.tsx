@@ -12,6 +12,7 @@ import {
     ManufacturerSection,
     RegistrationCompanySection,
     UsageSection,
+    StatusSection,
 } from '../form/form-sections'
 import { useDrugForm } from '../hooks/useDrugForm'
 
@@ -114,6 +115,7 @@ const EditButton = ({
                         isOpen={isOpen}
                         onClose={handleClose}
                         className="overflow-hidden"
+                        contentClassName="overflow-hidden"
                         width={800}
                     >
                         <motion.div
@@ -168,6 +170,7 @@ const EditButton = ({
                                                     {...formProps}
                                                 />
                                                 <UsageSection {...formProps} />
+                                                <StatusSection {...formProps} />
                                                 {renderButtons(formProps)}
                                             </FormikForm>
                                         </FormContainer>

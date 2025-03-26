@@ -10,16 +10,16 @@ const StatusCell = ({ status }: StatusCellProps) => {
         if (status) {
             return {
                 color: 'emerald',
-                text: 'Active',
+                text: 'Hidden',
                 icon: <FaCheckCircle color="#52c41a" />,
-                tooltip: 'Currently is active',
+                tooltip: 'Currently hidden',
             }
         } else {
             return {
                 color: 'red',
-                text: 'Hidden',
+                text: 'Active',
                 icon: <FaTimesCircle color="#f5222d" />,
-                tooltip: 'Currently is hidden',
+                tooltip: 'Currently active',
             }
         }
     }
