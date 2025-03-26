@@ -47,7 +47,6 @@ const QRBoxTableFilterForm = ({
         filter: reduxFilterData,
     } = useAppSelector((state) => state.drug.items)
 
-    // Create dynamic initial values based on Redux state
     const getInitialValues = useCallback(
         (): FilterData => ({
             Status: (reduxFilterData.Status as FilterData['Status']) || null,
@@ -57,8 +56,6 @@ const QRBoxTableFilterForm = ({
         }),
         [reduxFilterData],
     )
-
-    const filterBy = 1
 
     const hasActiveFilters = useCallback((values: FilterData): boolean => {
         const { Status, Category, Group } = values
@@ -100,14 +97,13 @@ const QRBoxTableFilterForm = ({
 
             onFilterComplete?.()
         },
-        [dispatch, metadata.pageSize, onFilterComplete, filterBy, userId],
+        [dispatch, metadata.pageSize, onFilterComplete, userId],
     )
 
     const handleReset = useCallback(
         async (setValues: (values: FilterData) => void) => {
             setIsReset(true)
 
-            // Reset form with null values
             const resetValues: FilterData = {
                 Status: null,
                 Category: null,

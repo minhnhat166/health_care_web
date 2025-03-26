@@ -22,6 +22,7 @@ interface EditButtonProps {
     drugId: string
     onSave?: (values: Partial<Drug>) => void
     onSuccess?: () => void
+    className?: string
 }
 
 const MotionButton = memo(motion(Button))
@@ -31,6 +32,7 @@ const EditButton = ({
     drugId,
     onSave,
     onSuccess,
+    className = '',
 }: EditButtonProps) => {
     const { t } = useTranslation()
     const toast = useToast()
@@ -87,27 +89,18 @@ const EditButton = ({
 
     return (
         <>
-            <MotionButton
-                variant="plain"
-                className="text-orange-500"
-                onClick={handleButtonClick}
-                disabled={disabled}
-                size="xs"
-                icon={<FaEdit />}
-                whileHover={{
-                    scale: 1.05,
-                    transition: { duration: 0.2 },
-                }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{
-                    duration: 0.3,
-                    ease: 'easeInOut',
-                }}
-            >
-                {t('views.drug.components.buttons.edit')}
-            </MotionButton>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                    variant="plain"
+                    size="xs"
+                    icon={<FaEdit />}
+                    onClick={handleOpen}
+                    className={`text-blue-500 ${className}`}
+                    disabled={disabled}
+                >
+                    {t('views.drug.components.buttons.edit', 'Edit')}
+                </Button>
+            </motion.div>
 
             <AnimatePresence>
                 {isOpen && (
