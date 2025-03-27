@@ -259,7 +259,8 @@
                         "registrationCompany": "Đơn Vị Đăng Ký Thuốc",
                         "additionalInfo": "Thông Tin Thêm",
                         "images": "Hình Ảnh Thuốc",
-                        "statusSection": "Trạng Thái Thuốc"
+                        "statusSection": "Trạng Thái Thuốc",
+                        "status": "Thông tin trạng thái"
                     },
                     "statusSection": {
                         "title": "Thông tin trạng thái",
@@ -346,7 +347,12 @@
                 "registeringCountry": "Nước đăng ký",
                 "registeringAddress": "Địa chỉ đăng ký",
                 "rating": "Đánh giá",
-                "registrationWithdrawal": "Rút đăng ký"
+                "registrationWithdrawal": "Rút đăng ký",
+                "status": "Trạng thái",
+                "state": "Trạng thái",
+                "createdAt": "Tạo lúc",
+                "updatedAt": "Cập nhật lúc",
+                "searchCount": "Số lần tìm kiếm"
             },
             "placeholders": {
                 "drugName": "Nhập tên thuốc hoặc biệt dược",
