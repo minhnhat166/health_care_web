@@ -110,7 +110,7 @@ const SideNav = () => {
         }
 
         return navMode
-    }, [navMode, mode])
+    }, [navMode, navMode === NAV_MODE_TRANSPARENT ? mode : null])
 
     const menuContent = useMemo(
         () => (
