@@ -15,6 +15,7 @@ import { useAppSelector } from '@/store'
 import useResponsive from '@/utils/hooks/useResponsive'
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
+import { memo, useMemo } from 'react'
 
 // Animation variants
 const sideNavVariants = {
@@ -22,18 +23,18 @@ const sideNavVariants = {
         width: SIDE_NAV_WIDTH,
         transition: {
             type: 'spring',
-            stiffness: 800,
-            damping: 45,
-            mass: 0.2,
+            stiffness: 1200,
+            damping: 30,
+            mass: 0.1,
         },
     },
     collapsed: {
         width: SIDE_NAV_COLLAPSED_WIDTH,
         transition: {
             type: 'spring',
-            stiffness: 800,
-            damping: 45,
-            mass: 0.2,
+            stiffness: 1200,
+            damping: 30,
+            mass: 0.1,
         },
     },
 }
@@ -42,14 +43,14 @@ const contentVariants = {
     expanded: {
         opacity: 1,
         transition: {
-            duration: 0.06,
+            duration: 0.03,
             ease: 'easeOut',
         },
     },
     collapsed: {
         opacity: 0,
         transition: {
-            duration: 0.04,
+            duration: 0.02,
             ease: 'easeIn',
         },
     },
@@ -60,16 +61,16 @@ const logoVariants = {
         x: 0,
         transition: {
             type: 'spring',
-            stiffness: 1000,
-            damping: 50,
+            stiffness: 1500,
+            damping: 30,
         },
     },
     collapsed: {
         x: 0,
         transition: {
             type: 'spring',
-            stiffness: 1000,
-            damping: 50,
+            stiffness: 1500,
+            damping: 30,
         },
     },
 }
@@ -92,14 +93,14 @@ const SideNav = () => {
 
     const { larger } = useResponsive()
 
-    const sideNavColor = () => {
+    const sideNavColor = useMemo(() => {
         if (navMode === NAV_MODE_THEMED) {
             return `bg-${themeColor}-${primaryColorLevel} side-nav-${navMode}`
         }
         return `side-nav-${navMode}`
-    }
+    }, [navMode, themeColor, primaryColorLevel])
 
-    const logoMode = () => {
+    const logoMode = useMemo(() => {
         if (navMode === NAV_MODE_THEMED) {
             return NAV_MODE_DARK
         }
@@ -109,66 +110,67 @@ const SideNav = () => {
         }
 
         return navMode
-    }
+    }, [navMode, mode])
 
-    const menuContent = (
-        <VerticalMenuContent
-            navMode={navMode}
-            collapsed={sideNavCollapse}
-            navigationTree={navigationConfig}
-            routeKey={currentRouteKey}
-            userAuthority={userAuthority as string[]}
-            direction={direction}
-        />
+    const menuContent = useMemo(
+        () => (
+            <VerticalMenuContent
+                navMode={navMode}
+                collapsed={sideNavCollapse}
+                navigationTree={navigationConfig}
+                routeKey={currentRouteKey}
+                userAuthority={userAuthority as string[]}
+                direction={direction}
+            />
+        ),
+        [navMode, sideNavCollapse, currentRouteKey, userAuthority, direction],
     )
 
+    if (!larger.md) return null
+
     return (
-        <>
-            {larger.md && (
-                <motion.div
-                    initial={sideNavCollapse ? 'collapsed' : 'expanded'}
-                    animate={sideNavCollapse ? 'collapsed' : 'expanded'}
-                    variants={sideNavVariants}
-                    className={classNames(
-                        'side-nav',
-                        sideNavColor(),
-                        !sideNavCollapse && 'side-nav-expand',
-                    )}
-                >
-                    <motion.div
-                        className="side-nav-header flex items-center justify-center p-4"
-                        variants={logoVariants}
-                    >
-                        {sideNavCollapse ? null : (
-                            <Logo
-                                mode={logoMode()}
-                                type={sideNavCollapse ? 'streamline' : 'full'}
-                                className={classNames(
-                                    sideNavCollapse
-                                        ? SIDE_NAV_CONTENT_GUTTER
-                                        : LOGO_X_GUTTER,
-                                )}
-                            />
+        <motion.div
+            initial={sideNavCollapse ? 'collapsed' : 'expanded'}
+            animate={sideNavCollapse ? 'collapsed' : 'expanded'}
+            variants={sideNavVariants}
+            className={classNames(
+                'side-nav',
+                sideNavColor,
+                !sideNavCollapse && 'side-nav-expand',
+            )}
+        >
+            <motion.div
+                className="side-nav-header flex items-center justify-center p-4"
+                variants={logoVariants}
+            >
+                {!sideNavCollapse && (
+                    <Logo
+                        mode={logoMode}
+                        type={sideNavCollapse ? 'streamline' : 'full'}
+                        className={classNames(
+                            sideNavCollapse
+                                ? SIDE_NAV_CONTENT_GUTTER
+                                : LOGO_X_GUTTER,
                         )}
-                    </motion.div>
-                    {sideNavCollapse ? (
-                        menuContent
-                    ) : (
-                        <motion.div
-                            className="side-nav-content"
-                            initial="collapsed"
-                            animate="expanded"
-                            variants={contentVariants}
-                        >
-                            <ScrollBar autoHide direction={direction}>
-                                {menuContent}
-                            </ScrollBar>
-                        </motion.div>
-                    )}
+                    />
+                )}
+            </motion.div>
+            {sideNavCollapse ? (
+                menuContent
+            ) : (
+                <motion.div
+                    className="side-nav-content"
+                    initial="collapsed"
+                    animate="expanded"
+                    variants={contentVariants}
+                >
+                    <ScrollBar autoHide direction={direction}>
+                        {menuContent}
+                    </ScrollBar>
                 </motion.div>
             )}
-        </>
+        </motion.div>
     )
 }
 
-export default SideNav
+export default memo(SideNav)
