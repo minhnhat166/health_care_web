@@ -18,7 +18,6 @@ const UserListTable = () => {
         (state) => state.userList.items.metadata,
     )
     const data = useAppSelector((state) => state.userList.items.result)
-    console.log('🚀 ~ UserListTable ~ data:', data)
     const { keyword } = useAppSelector((state) => state.userList.items.search)
 
     // Check if search is specifically for admin roles

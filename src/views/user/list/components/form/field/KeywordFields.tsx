@@ -9,7 +9,7 @@ const KeywordFields = () => {
         <div className="space-y-4">
             <FormItem label={t('views.user.list.form.fields.keyword.label')}>
                 <Field name="keyword">
-                    {({ field }: { field: FieldInputProps<number> }) => (
+                    {({ field }: { field: FieldInputProps<string> }) => (
                         <Input
                             {...field}
                             type="text"
