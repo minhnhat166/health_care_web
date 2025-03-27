@@ -80,12 +80,22 @@ export const apiPutDrugsId = async (id: string, data: Drug) => {
     })
 }
 
-export const apiGetDrugsSearchName = async (name: string) => {
-    return await ApiService.fetchData<Drug[]>({
-        url: `/api/drugs/name`,
+export const apiGetDrugsSearch = async <T, U extends Record<string, unknown>>({
+    Name,
+    Ingredient,
+    Company,
+    page,
+    pageSize,
+}: U) => {
+    return await ApiService.fetchData<T>({
+        url: `/api/drugs/search`,
         method: 'get',
         params: {
-            name,
+            Name,
+            Ingredient,
+            Company,
+            page,
+            pageSize,
         },
     })
 }

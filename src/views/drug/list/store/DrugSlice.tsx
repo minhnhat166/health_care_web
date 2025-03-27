@@ -3,6 +3,7 @@ import type { Error } from '@/@types/error'
 import {
     apiGetDrugs,
     apiGetDrugsFilter,
+    apiGetDrugsSearch,
     type ApiGetDrugsRequest,
     type ApiGetDrugsResponse,
 } from '@/services/DrugService'
@@ -30,6 +31,11 @@ export type DrugState = {
         Category: string
         Group: string
     }
+    search: {
+        Name: string
+        Ingredient: string
+        Company: string
+    }
 }
 
 export const initialMetadata: DrugState['metadata'] = {
@@ -45,6 +51,12 @@ export const initialFilter: DrugState['filter'] = {
     Group: '',
 }
 
+export const initialSearch: DrugState['search'] = {
+    Name: '',
+    Ingredient: '',
+    Company: '',
+}
+
 export const initialError: DrugState['error'] = {
     code: null,
     message: '',
@@ -57,6 +69,7 @@ export const initialState: DrugState = {
     selectedDrug: '',
     metadata: initialMetadata,
     filter: initialFilter,
+    search: initialSearch,
 }
 
 export const getApiDrugs = createAsyncThunk<
@@ -153,6 +166,68 @@ export const getDrugsFilter = createAsyncThunk<
     },
 )
 
+export type DrugSearchRequest = {
+    page: number
+    pageSize: number
+    Name?: string | null
+    Ingredient?: string | null
+    Company?: string | null
+}
+
+export type DrugSearchResponse = {
+    total: number
+    totalPage: number
+    page: number
+    pageSize: number
+    data: Drug[]
+}
+
+export const getDrugsSearch = createAsyncThunk<
+    DrugSearchResponse,
+    DrugSearchRequest
+>(
+    `${SLICE_NAME}/getDrugsSearch`,
+    async (
+        { page, pageSize, Name, Ingredient, Company }: DrugSearchRequest,
+        { rejectWithValue },
+    ) => {
+        try {
+            if (!page || !pageSize) {
+                return rejectWithValue({
+                    code: 400,
+                    message: 'Invalid page or pageSize',
+                })
+            }
+            const requestPayload: DrugSearchRequest = {
+                page,
+                pageSize,
+                ...(Name !== null && Name !== undefined ? { Name } : {}),
+                ...(Ingredient !== null && Ingredient !== undefined
+                    ? { Ingredient }
+                    : {}),
+                ...(Company !== null && Company !== undefined
+                    ? { Company }
+                    : {}),
+            }
+
+            const response = await apiGetDrugsSearch<
+                DrugSearchResponse,
+                DrugSearchRequest
+            >(requestPayload)
+
+            return response.data
+        } catch (error: any) {
+            if (error.response?.data) {
+                return rejectWithValue(error.response.data)
+            }
+            return rejectWithValue({
+                code: error.response?.status || 500,
+                message: 'An error occurred, please try again later',
+            })
+        }
+    },
+)
+
 export const DrugSlice = createSlice({
     name: SLICE_NAME,
     initialState,
@@ -178,6 +253,16 @@ export const DrugSlice = createSlice({
         ) {
             const { key, value } = action.payload
             state.filter[key] = value === null ? '' : value
+        },
+        setSearch(
+            state,
+            action: PayloadAction<{
+                key: keyof DrugState['search']
+                value: string | null
+            }>,
+        ) {
+            const { key, value } = action.payload
+            state.search[key] = value === null ? '' : value
         },
     },
     extraReducers(builder) {
@@ -221,9 +306,34 @@ export const DrugSlice = createSlice({
                 state.result = []
                 state.error = action.payload as unknown as Error
             })
+            .addCase(getDrugsSearch.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(getDrugsSearch.fulfilled, (state, action) => {
+                state.loading = false
+                state.result = action.payload.data
+
+                state.metadata = {
+                    ...state.metadata,
+                    page: action.payload.page,
+                    pageSize: action.payload.pageSize,
+                    totalPage: action.payload.totalPage,
+                    totalElement: action.payload.total,
+                }
+            })
+            .addCase(getDrugsSearch.rejected, (state, action) => {
+                state.loading = false
+                state.result = []
+                state.error = action.payload as unknown as Error
+            })
     },
 })
 
-export const { setTableData, clearError, setSelectedDrug, setFilter } =
-    DrugSlice.actions
+export const {
+    setTableData,
+    clearError,
+    setSelectedDrug,
+    setFilter,
+    setSearch,
+} = DrugSlice.actions
 export default DrugSlice.reducer

@@ -6,100 +6,78 @@ import { useTranslation } from 'react-i18next'
 import { MdClear, MdSearch } from 'react-icons/md'
 import * as Yup from 'yup'
 import {
-    getAllQRBox,
-    setTableData,
-    updateStatus,
-    updateType,
-    updateValue,
+    getUserList,
+    getUserListByKeyword,
+    setSearch,
     useAppDispatch,
     useAppSelector,
 } from '../../store'
-import { StatusFields, TypeFields, ValueFields } from './field'
+import { KeywordFields } from './field'
 
-interface QRBoxTableFilterFormProps {
+interface UserTableFilterFormProps {
     onFilterComplete?: () => void
 }
 
 export interface FilterData {
-    type: number | null
-    value: string | null
-    status: number | null
+    keyword: string | null
 }
 
 const filterValidationSchema = Yup.object().shape({
-    type: Yup.number().nullable(),
-    value: Yup.string().nullable(),
-    status: Yup.number().nullable(),
+    keyword: Yup.string().nullable(),
 })
 
-const QRBoxTableFilterForm = ({
+const UserTableFilterForm = ({
     onFilterComplete,
-}: QRBoxTableFilterFormProps) => {
+}: UserTableFilterFormProps) => {
     const dispatch = useAppDispatch()
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const setIsReset = useState(false)[1]
 
     const { t } = useTranslation()
 
-    const { userId } = useMainAppSelector((state) => state.auth.user)
-    const {
-        metadata,
-        loading,
-        filterData: reduxFilterData,
-        filterBy,
-    } = useAppSelector((state) => state.QRBoxList.items)
+    const { id: userId } = useMainAppSelector((state) => state.auth.user)
+    const { loading, search: reduxFilterData } = useAppSelector(
+        (state) => state.userList.items,
+    )
 
     // Create dynamic initial values based on Redux state
     const getInitialValues = useCallback(
         () => ({
-            type: reduxFilterData.type || null,
-            value: reduxFilterData.value || null,
-            status: reduxFilterData.status || null,
+            keyword: reduxFilterData.keyword || null,
         }),
         [reduxFilterData],
     )
 
     const hasActiveFilters = useCallback((values: FilterData): boolean => {
-        const { type, value, status } = values
+        const { keyword } = values
 
-        const hasType = type !== null
-        const hasValue = value !== null
-        const hasStatus = status !== null
+        const hasKeyword = keyword !== null
 
-        return hasType || hasValue || hasStatus
+        return hasKeyword
     }, [])
 
     const handleSubmit = useCallback(
         async (
             values: FilterData,
-            { setValues }: FormikHelpers<FilterData>,
+            { setSubmitting }: FormikHelpers<FilterData>,
         ) => {
             const requestData = {
-                page: 1,
-                size: metadata.size,
-                type: values.type ?? 9,
-                value: values.value ?? '',
-                status: values.status ?? -1,
-                mid: 'null',
-                filterBy: filterBy,
+                keyword: values.keyword?.trim() || '',
             }
 
             // Update Redux state
-            dispatch(updateType({ type: values.type ?? 9 }))
-            dispatch(updateValue({ value: values.value ?? '' }))
-            dispatch(updateStatus({ status: values.status ?? -1 }))
+            dispatch(setSearch({ key: 'keyword', value: requestData.keyword }))
 
-            // Update table data and fetch
-            dispatch(setTableData({ page: 1, size: metadata.size }))
-            if (userId)
-                await dispatch(getAllQRBox({ userId, data: requestData }))
+            if (requestData.keyword === '') {
+                await dispatch(getUserList({ page: 1, pageSize: 10 }))
+            } else if (userId) {
+                // Fetch filtered data
+                await dispatch(getUserListByKeyword(requestData))
+            }
 
-            // Update form values to maintain consistency
-            setValues(values)
-
+            setSubmitting(false)
             onFilterComplete?.()
         },
-        [dispatch, metadata.size, onFilterComplete, filterBy, userId],
+        [dispatch, onFilterComplete, userId],
     )
 
     const handleReset = useCallback(
@@ -108,31 +86,17 @@ const QRBoxTableFilterForm = ({
 
             // Reset form with null values
             const resetValues: FilterData = {
-                type: 9,
-                value: '',
-                status: -1,
+                keyword: null,
             }
             setValues(resetValues)
 
-            const emptyRequest = {
-                page: 1,
-                size: metadata.size,
-                type: 9,
-                value: '',
-                status: -1,
-                mid: 'null',
-                filterBy: 1,
-            }
-
             // Update Redux state
-            dispatch(updateType(null))
-            dispatch(updateValue(null))
-            dispatch(updateStatus(null))
-            dispatch(setTableData({ page: 1, size: metadata.size }))
+            dispatch(setSearch({ key: 'keyword', value: '' }))
 
-            // API call empty request
-            if (userId)
-                await dispatch(getAllQRBox({ userId, data: emptyRequest }))
+            if (userId) {
+                // Fetch default data
+                await dispatch(getUserList({ page: 1, pageSize: 10 }))
+            }
 
             setTimeout(() => {
                 setIsReset(false)
@@ -140,7 +104,7 @@ const QRBoxTableFilterForm = ({
 
             onFilterComplete?.()
         },
-        [dispatch, metadata.size, onFilterComplete, setIsReset, userId],
+        [dispatch, onFilterComplete, setIsReset, userId],
     )
 
     return (
@@ -162,12 +126,7 @@ const QRBoxTableFilterForm = ({
                     >
                         <FormContainer>
                             <div className="grid grid-cols-1 gap-4">
-                                {/* Type */}
-                                <TypeFields />
-                                {/* Status */}
-                                <StatusFields />
-                                {/* Tìm Kiếm Value - Giá trị để search */}
-                                <ValueFields />
+                                <KeywordFields />
                             </div>
                             <div className="flex flex-col justify-end space-y-4">
                                 <Button
@@ -179,9 +138,7 @@ const QRBoxTableFilterForm = ({
                                     icon={<MdClear />}
                                     onClick={() => handleReset(setValues)}
                                 >
-                                    {t(
-                                        'transactions.transactionList.transactionTableTools.transactionTableFilterForm.clearButton',
-                                    )}
+                                    {t('views.user.list.form.resetButton')}
                                 </Button>
                                 <Button
                                     variant="solid"
@@ -190,9 +147,7 @@ const QRBoxTableFilterForm = ({
                                     loading={loading}
                                     type="submit"
                                 >
-                                    {t(
-                                        'transactions.transactionList.transactionTableTools.transactionTableFilterForm.searchButton',
-                                    )}
+                                    {t('views.user.list.form.searchButton')}
                                 </Button>
                             </div>
                         </FormContainer>
@@ -203,4 +158,4 @@ const QRBoxTableFilterForm = ({
     )
 }
 
-export default QRBoxTableFilterForm
+export default UserTableFilterForm

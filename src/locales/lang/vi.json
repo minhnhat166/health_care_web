@@ -92,12 +92,38 @@
                 "role": "Vai trò",
                 "createdAt": "Tạo lúc",
                 "updatedAt": "Cập nhật lúc"
+            },
+            "list": {
+                "form": {
+                    "resetButton": "Đặt lại",
+                    "searchButton": "Tìm kiếm",
+                    "fields": {
+                        "keyword": {
+                            "label": "Từ khóa",
+                            "placeholder": "Nhập từ khóa tìm kiếm"
+                        }
+                    }
+                }
             }
         },
         "drug": {
             "title": "Tra Cứu Thuốc",
             "filter": {
                 "title": "Lọc Tìm Kiếm",
+                "search": {
+                    "title": "Tìm Kiếm Nhanh",
+                    "collapsible": {
+                        "expand": "Mở rộng mục tìm kiếm",
+                        "collapse": "Thu gọn mục tìm kiếm"
+                    }
+                },
+                "filters": {
+                    "title": "Bộ Lọc Nâng Cao",
+                    "collapsible": {
+                        "expand": "Mở rộng mục bộ lọc",
+                        "collapse": "Thu gọn mục bộ lọc"
+                    }
+                },
                 "status": {
                     "label": "Trạng Thái",
                     "placeholder": "Chọn trạng thái",
@@ -133,7 +159,16 @@
                 },
                 "filterDrawer": {
                     "filterButton": "Lọc",
-                    "title": "Lọc thuốc"
+                    "title": "Lọc thuốc",
+                    "searchTools": "Công Cụ Tìm Kiếm Thuốc"
+                },
+                "fields": {
+                    "name": "Tên thuốc",
+                    "namePlaceholder": "Nhập tên thuốc hoặc biệt dược",
+                    "ingredient": "Hoạt chất",
+                    "ingredientPlaceholder": "Nhập hoạt chất chính",
+                    "company": "Công ty sản xuất",
+                    "companyPlaceholder": "Nhập tên công ty sản xuất"
                 }
             },
             "components": {

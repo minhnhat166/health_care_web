@@ -3,7 +3,7 @@ import useResponsive from '@/utils/hooks/useResponsive'
 import { useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { HiOutlineFilter } from 'react-icons/hi'
-import QRBoxTableFilterForm from '../form/QRBoxTableFilterForm'
+import UserTableFilterForm from '../form/UserTableFilterForm'
 
 interface FilterDrawerProps {
     title: string
@@ -20,12 +20,12 @@ const FilterDrawer = ({ isOpen, onClose, title }: FilterDrawerProps) => {
             onClose={onClose}
             onRequestClose={onClose}
         >
-            <QRBoxTableFilterForm onFilterComplete={onClose} />
+            <UserTableFilterForm onFilterComplete={onClose} />
         </Drawer>
     )
 }
 
-const DrugTableTools = () => {
+const UserTableTools = () => {
     const { t } = useTranslation()
     const [isFilterOpen, setIsFilterOpen] = useState(false)
     const { larger } = useResponsive()
@@ -82,7 +82,7 @@ const DrugTableTools = () => {
             )}
             {/* If screen bigger than 1280 */}
             {larger.xl ? (
-                <QRBoxTableFilterForm />
+                <UserTableFilterForm />
             ) : (
                 <FilterDrawer
                     title={t(
@@ -96,4 +96,4 @@ const DrugTableTools = () => {
     )
 }
 
-export default DrugTableTools
+export default UserTableTools
