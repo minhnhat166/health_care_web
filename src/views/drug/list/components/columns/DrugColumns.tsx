@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import StateCell from '../cell/StateCell'
 import StatusCell from '../cell/StatusCell'
 import ActionColumn from './ActionsColumn'
+import CustomStatusCell from '../cell/CustomStatus'
 
 const DrugColumns = (page: number, limit: number): ColumnDef<Drug>[] => {
     const { t } = useTranslation()
@@ -95,9 +96,9 @@ const DrugColumns = (page: number, limit: number): ColumnDef<Drug>[] => {
                     {t('views.drug.components.columns.state')}
                 </p>
             ),
-            id: 'state',
+            id: 'status',
             cell: (props) => {
-                return <StateCell state={props.row.original.state} />
+                return <CustomStatusCell status={props.row.original.status} />
             },
         },
         {

@@ -48,7 +48,21 @@ const initialValues = {
     rutSdk: false,
     state: 1,
     images: '',
+    status: 'Created',
 }
+
+const stateOptions = [
+    { value: 202, label: '202' },
+    { value: 404, label: '404' },
+    { value: 500, label: '500' },
+]
+
+const statusOptions = [
+    { value: 'Created', label: 'Created' },
+    { value: 'Approved', label: 'Approved' },
+    { value: 'Updated', label: 'Updated' },
+    { value: 'Inactive', label: 'Inactive' },
+]
 
 // Form validation schema
 const validationSchema = Yup.object({
@@ -501,19 +515,28 @@ const CreateDrugModal: React.FC<CreateDrugModalProps> = ({
                                             </span>
                                         </label>
                                         <Field
-                                            type="text"
+                                            as="select"
                                             id="nhomThuoc"
                                             name="nhomThuoc"
-                                            placeholder={t(
-                                                'views.drug.placeholders.drugGroup',
-                                            )}
                                             className={`w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500 ${
                                                 errors.nhomThuoc &&
                                                 touched.nhomThuoc
                                                     ? 'border-red-500'
                                                     : 'border-gray-300'
                                             }`}
-                                        />
+                                        >
+                                            <option value="" disabled>
+                                                {t(
+                                                    'views.drug.placeholders.drugGroup',
+                                                )}
+                                            </option>
+                                            <option value="Tân dược">
+                                                Tân dược
+                                            </option>
+                                            <option value="Đông dược">
+                                                Đông dược
+                                            </option>
+                                        </Field>
                                         <ErrorMessage
                                             name="nhomThuoc"
                                             component="p"
@@ -571,19 +594,28 @@ const CreateDrugModal: React.FC<CreateDrugModalProps> = ({
                                             </span>
                                         </label>
                                         <Field
-                                            type="text"
+                                            as="select"
                                             id="phanLoai"
                                             name="phanLoai"
-                                            placeholder={t(
-                                                'views.drug.placeholders.classification',
-                                            )}
                                             className={`w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500 ${
                                                 errors.phanLoai &&
                                                 touched.phanLoai
                                                     ? 'border-red-500'
                                                     : 'border-gray-300'
                                             }`}
-                                        />
+                                        >
+                                            <option value="" disabled>
+                                                {t(
+                                                    'views.drug.placeholders.classification',
+                                                )}
+                                            </option>
+                                            <option value="Thuốc kê đơn">
+                                                Thuốc kê đơn
+                                            </option>
+                                            <option value="Thuốc không kê đơn">
+                                                Thuốc không kê đơn
+                                            </option>
+                                        </Field>
                                         <ErrorMessage
                                             name="phanLoai"
                                             component="p"
@@ -671,18 +703,33 @@ const CreateDrugModal: React.FC<CreateDrugModalProps> = ({
                                             </span>
                                         </label>
                                         <Field
-                                            type="text"
+                                            as="select"
                                             id="baoChe"
                                             name="baoChe"
-                                            placeholder={t(
-                                                'views.drug.placeholders.preparation',
-                                            )}
                                             className={`w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500 ${
                                                 errors.baoChe && touched.baoChe
                                                     ? 'border-red-500'
                                                     : 'border-gray-300'
                                             }`}
-                                        />
+                                        >
+                                            <option value="" disabled>
+                                                {t(
+                                                    'views.drug.placeholders.preparation',
+                                                )}
+                                            </option>
+                                            <option value="Viên nén">
+                                                Viên nén
+                                            </option>
+                                            <option value="Viên nang">
+                                                Viên nang
+                                            </option>
+                                            <option value="Dung dịch">
+                                                Dung dịch
+                                            </option>
+                                            <option value="Bột pha tiêm">
+                                                Bột pha tiêm
+                                            </option>
+                                        </Field>
                                         <ErrorMessage
                                             name="baoChe"
                                             component="p"
@@ -702,19 +749,34 @@ const CreateDrugModal: React.FC<CreateDrugModalProps> = ({
                                             </span>
                                         </label>
                                         <Field
-                                            type="text"
+                                            as="select"
                                             id="dongGoi"
                                             name="dongGoi"
-                                            placeholder={t(
-                                                'views.drug.placeholders.packaging',
-                                            )}
                                             className={`w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500 ${
                                                 errors.dongGoi &&
                                                 touched.dongGoi
                                                     ? 'border-red-500'
                                                     : 'border-gray-300'
                                             }`}
-                                        />
+                                        >
+                                            <option value="" disabled>
+                                                {t(
+                                                    'views.drug.placeholders.packaging',
+                                                )}
+                                            </option>
+                                            <option value="Hộp 1 vỉ x 1 viên">
+                                                Hộp 1 vỉ x 1 viên
+                                            </option>
+                                            <option value="Hộp 2 vỉ x 14 viên">
+                                                Hộp 2 vỉ x 14 viên
+                                            </option>
+                                            <option value="Hộp 3 vỉ x 10 viên">
+                                                Hộp 3 vỉ x 10 viên
+                                            </option>
+                                            <option value="Hộp 5 vỉ x 20 viên">
+                                                Hộp 5 vỉ x 20 viên
+                                            </option>
+                                        </Field>
                                         <ErrorMessage
                                             name="dongGoi"
                                             component="p"
@@ -736,19 +798,30 @@ const CreateDrugModal: React.FC<CreateDrugModalProps> = ({
                                             </span>
                                         </label>
                                         <Field
-                                            type="text"
+                                            as="select"
                                             id="tieuChuan"
                                             name="tieuChuan"
-                                            placeholder={t(
-                                                'views.drug.placeholders.standard',
-                                            )}
                                             className={`w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500 ${
                                                 errors.tieuChuan &&
                                                 touched.tieuChuan
                                                     ? 'border-red-500'
                                                     : 'border-gray-300'
                                             }`}
-                                        />
+                                        >
+                                            <option value="" disabled>
+                                                {t(
+                                                    'views.drug.placeholders.standard',
+                                                )}
+                                            </option>
+                                            <option value="TCCS">TCCS</option>
+                                            <option value="TCVN">TCVN</option>
+                                            <option value="WHO-GMP">
+                                                WHO-GMP
+                                            </option>
+                                            <option value="EU-GMP">
+                                                EU-GMP
+                                            </option>
+                                        </Field>
                                         <ErrorMessage
                                             name="tieuChuan"
                                             component="p"
@@ -768,19 +841,34 @@ const CreateDrugModal: React.FC<CreateDrugModalProps> = ({
                                             </span>
                                         </label>
                                         <Field
-                                            type="text"
+                                            as="select"
                                             id="tuoiTho"
                                             name="tuoiTho"
-                                            placeholder={t(
-                                                'views.drug.placeholders.shelfLife',
-                                            )}
                                             className={`w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500 ${
                                                 errors.tuoiTho &&
                                                 touched.tuoiTho
                                                     ? 'border-red-500'
                                                     : 'border-gray-300'
                                             }`}
-                                        />
+                                        >
+                                            <option value="" disabled>
+                                                {t(
+                                                    'views.drug.placeholders.shelfLife',
+                                                )}
+                                            </option>
+                                            <option value="12 tháng">
+                                                12 tháng
+                                            </option>
+                                            <option value="24 tháng">
+                                                24 tháng
+                                            </option>
+                                            <option value="36 tháng">
+                                                36 tháng
+                                            </option>
+                                            <option value="48 tháng">
+                                                48 tháng
+                                            </option>
+                                        </Field>
                                         <ErrorMessage
                                             name="tuoiTho"
                                             component="p"
@@ -1306,6 +1394,44 @@ const CreateDrugModal: React.FC<CreateDrugModalProps> = ({
 
                                 {/* Convert checkbox fields */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {/* state field */}
+                                    <div className="mb-4 flex items-center">
+                                        <Field
+                                            as="select"
+                                            id="state"
+                                            name="state"
+                                            className="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
+                                        >
+                                            {stateOptions.map((option) => (
+                                                <option
+                                                    key={option.value}
+                                                    value={option.value}
+                                                >
+                                                    {option.label}
+                                                </option>
+                                            ))}
+                                        </Field>
+                                    </div>
+
+                                    {/* status field */}
+                                    <div className="mb-4 flex items-center">
+                                        <Field
+                                            as="select"
+                                            id="status"
+                                            name="status"
+                                            className="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
+                                        >
+                                            {statusOptions.map((option) => (
+                                                <option
+                                                    key={option.value}
+                                                    value={option.value}
+                                                >
+                                                    {option.label}
+                                                </option>
+                                            ))}
+                                        </Field>
+                                    </div>
+
                                     {/* isHide field */}
                                     <div className="mb-4 flex items-center">
                                         <Field

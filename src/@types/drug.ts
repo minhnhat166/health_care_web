@@ -34,4 +34,5 @@ export type Drug = {
     updatedAt: string
     images: string | null
     searchCount: number | null
+    status: string
 }

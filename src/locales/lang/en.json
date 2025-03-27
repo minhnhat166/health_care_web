@@ -261,7 +261,8 @@
                         "registrationCompany": "Pharmaceutical Registration Company",
                         "additionalInfo": "Additional Medication Information",
                         "images": "Medication Images & Visual References",
-                        "statusSection": "Medication Status Information"
+                        "statusSection": "Medication Status Information",
+                        "status": "Medication Status"
                     },
                     "statusSection": {
                         "title": "Status Information",
@@ -348,7 +349,11 @@
                 "registeringCountry": "Registering Country",
                 "registeringAddress": "Registering Address",
                 "rating": "Rating",
-                "registrationWithdrawal": "Registration Withdrawal"
+                "registrationWithdrawal": "Registration Withdrawal",
+                "status": "Status",
+                "state": "State",
+                "createdAt": "Created At",
+                "updatedAt": "Updated At"
             },
             "placeholders": {
                 "drugName": "Enter drug name",
