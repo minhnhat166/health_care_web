@@ -92,6 +92,18 @@
                 "role": "Role",
                 "createdAt": "Created At",
                 "updatedAt": "Updated At"
+            },
+            "list": {
+                "form": {
+                    "resetButton": "Reset",
+                    "searchButton": "Search",
+                    "fields": {
+                        "keyword": {
+                            "label": "Keyword",
+                            "placeholder": "Enter search keyword"
+                        }
+                    }
+                }
             }
         },
         "drug": {

@@ -92,6 +92,18 @@
                 "role": "Vai trò",
                 "createdAt": "Tạo lúc",
                 "updatedAt": "Cập nhật lúc"
+            },
+            "list": {
+                "form": {
+                    "resetButton": "Đặt lại",
+                    "searchButton": "Tìm kiếm",
+                    "fields": {
+                        "keyword": {
+                            "label": "Từ khóa",
+                            "placeholder": "Nhập từ khóa tìm kiếm"
+                        }
+                    }
+                }
             }
         },
         "drug": {
