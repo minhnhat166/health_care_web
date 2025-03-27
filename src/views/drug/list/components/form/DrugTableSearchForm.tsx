@@ -1,39 +1,64 @@
-import { Button, FormContainer } from '@/components/ui'
-import { useAppSelector as useMainAppSelector } from '@/store'
-import { Form, Formik, FormikHelpers } from 'formik'
+import { Button, FormContainer, FormItem, Input } from '@/components/ui'
+import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik'
 import { memo, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdClear, MdSearch } from 'react-icons/md'
 import * as Yup from 'yup'
 import {
-    getDrugsFilter,
-    setFilter,
+    getDrugsSearch,
+    setSearch,
     setTableData,
     useAppDispatch,
     useAppSelector,
 } from '../../store'
-import { StatusFields } from './field'
-import CategoryFields from './field/CategoryFields'
-import GroupFields from './field/GroupFields'
 
 // Form validation schema - moved outside component to prevent recreation
 const filterValidationSchema = Yup.object().shape({
-    Status: Yup.string().nullable(),
-    Category: Yup.string().nullable(),
-    Group: Yup.string().nullable(),
+    Name: Yup.string().nullable(),
+    Ingredient: Yup.string().nullable(),
+    Company: Yup.string().nullable(),
 })
 
-interface DrugTableFilterFormProps {
+interface DrugTableSearchFormProps {
     onFilterComplete?: () => void
 }
 
 export interface FilterData {
-    Status?: 'Created' | 'Approved' | 'Updated' | 'Inactive' | null
-    Category?: 'ThuocKeDon' | 'ThuocKhongKeDon' | null
-    Group?: 'TanDuoc' | 'DongDuoc' | null
+    Name?: string | null
+    Ingredient?: string | null
+    Company?: string | null
 }
 
-// Memoized form buttons to prevent unnecessary rerenders
+// Memoized form field component
+const SearchField = memo(
+    ({
+        label,
+        name,
+        placeholder,
+    }: {
+        label: string
+        name: string
+        placeholder: string
+    }) => (
+        <div className="space-y-4">
+            <FormItem label={label}>
+                <Field name={name}>
+                    {({ field }: FieldProps) => (
+                        <Input
+                            {...field}
+                            type="text"
+                            placeholder={placeholder}
+                        />
+                    )}
+                </Field>
+            </FormItem>
+        </div>
+    ),
+)
+
+SearchField.displayName = 'SearchField'
+
+// Memoized form buttons
 const FormButtons = memo(
     ({
         hasActiveFilters,
@@ -73,34 +98,36 @@ const FormButtons = memo(
 
 FormButtons.displayName = 'FormButtons'
 
-const DrugTableFilterForm = ({
+const DrugTableSearchForm = ({
     onFilterComplete,
-}: DrugTableFilterFormProps) => {
+}: DrugTableSearchFormProps) => {
     const dispatch = useAppDispatch()
     const [isReset, setIsReset] = useState(false)
     const { t } = useTranslation()
 
-    const { id: userId } = useMainAppSelector((state) => state.auth.user)
     const {
         metadata,
         loading,
-        filter: reduxFilterData,
+        search: reduxFilterData,
     } = useAppSelector((state) => state.drug.items)
 
     // Calculate initial values based on redux state
     const initialValues = useMemo(
         (): FilterData => ({
-            Status: (reduxFilterData.Status as FilterData['Status']) || null,
-            Category:
-                (reduxFilterData.Category as FilterData['Category']) || null,
-            Group: (reduxFilterData.Group as FilterData['Group']) || null,
+            Name: reduxFilterData.Name || null,
+            Ingredient: reduxFilterData.Ingredient || null,
+            Company: reduxFilterData.Company || null,
         }),
         [reduxFilterData],
     )
 
     const hasActiveFilters = useCallback((values: FilterData): boolean => {
-        const { Status, Category, Group } = values
-        return Status !== null || Category !== null || Group !== null
+        const { Name, Ingredient, Company } = values
+        return (
+            (!!Name && Name !== '') ||
+            (!!Ingredient && Ingredient !== '') ||
+            (!!Company && Company !== '')
+        )
     }, [])
 
     const handleSubmit = useCallback(
@@ -109,31 +136,37 @@ const DrugTableFilterForm = ({
             { setValues }: FormikHelpers<FilterData>,
         ) => {
             // Update Redux state
-            dispatch(setFilter({ key: 'Status', value: values.Status ?? '' }))
+            dispatch(setSearch({ key: 'Name', value: values.Name ?? '' }))
             dispatch(
-                setFilter({ key: 'Category', value: values.Category ?? '' }),
+                setSearch({
+                    key: 'Ingredient',
+                    value: values.Ingredient ?? '',
+                }),
             )
-            dispatch(setFilter({ key: 'Group', value: values.Group ?? '' }))
+            dispatch(setSearch({ key: 'Company', value: values.Company ?? '' }))
 
             // Update table data and fetch
             dispatch(setTableData({ page: 1, pageSize: metadata.pageSize }))
-            if (userId) {
+
+            try {
                 await dispatch(
-                    getDrugsFilter({
+                    getDrugsSearch({
                         page: 1,
                         pageSize: metadata.pageSize,
-                        Status: values.Status || null,
-                        Category: values.Category || null,
-                        Group: values.Group || null,
+                        Name: values.Name || undefined,
+                        Ingredient: values.Ingredient || undefined,
+                        Company: values.Company || undefined,
                     }),
                 )
+            } catch (error) {
+                console.error('Error searching drugs:', error)
             }
 
             // Update form values to maintain consistency
             setValues(values)
             onFilterComplete?.()
         },
-        [dispatch, metadata.pageSize, onFilterComplete, userId],
+        [dispatch, metadata.pageSize, onFilterComplete],
     )
 
     const handleReset = useCallback(
@@ -141,36 +174,38 @@ const DrugTableFilterForm = ({
             setIsReset(true)
 
             const resetValues: FilterData = {
-                Status: null,
-                Category: null,
-                Group: null,
+                Name: null,
+                Ingredient: null,
+                Company: null,
             }
             setValues(resetValues)
 
             // Update Redux state
-            dispatch(setFilter({ key: 'Status', value: '' }))
-            dispatch(setFilter({ key: 'Category', value: '' }))
-            dispatch(setFilter({ key: 'Group', value: '' }))
+            dispatch(setSearch({ key: 'Name', value: '' }))
+            dispatch(setSearch({ key: 'Ingredient', value: '' }))
+            dispatch(setSearch({ key: 'Company', value: '' }))
 
             // Update table data and fetch
             dispatch(setTableData({ page: 1, pageSize: metadata.pageSize }))
 
-            if (userId) {
+            try {
                 await dispatch(
-                    getDrugsFilter({
+                    getDrugsSearch({
                         page: 1,
                         pageSize: metadata.pageSize,
-                        Status: null,
-                        Category: null,
-                        Group: null,
+                        Name: undefined,
+                        Ingredient: undefined,
+                        Company: undefined,
                     }),
                 )
+            } catch (error) {
+                console.error('Error resetting drug search:', error)
             }
 
             setTimeout(() => setIsReset(false), 100)
             onFilterComplete?.()
         },
-        [dispatch, metadata.pageSize, onFilterComplete, userId],
+        [dispatch, metadata.pageSize, onFilterComplete],
     )
 
     // Prevent rerender when isReset changes
@@ -199,9 +234,33 @@ const DrugTableFilterForm = ({
                         >
                             <FormContainer>
                                 <div className="grid grid-cols-1 gap-4">
-                                    <CategoryFields />
-                                    <StatusFields />
-                                    <GroupFields />
+                                    <SearchField
+                                        label={t(
+                                            'views.drug.filter.fields.name',
+                                        )}
+                                        name="Name"
+                                        placeholder={t(
+                                            'views.drug.filter.fields.namePlaceholder',
+                                        )}
+                                    />
+                                    <SearchField
+                                        label={t(
+                                            'views.drug.filter.fields.ingredient',
+                                        )}
+                                        name="Ingredient"
+                                        placeholder={t(
+                                            'views.drug.filter.fields.ingredientPlaceholder',
+                                        )}
+                                    />
+                                    <SearchField
+                                        label={t(
+                                            'views.drug.filter.fields.company',
+                                        )}
+                                        name="Company"
+                                        placeholder={t(
+                                            'views.drug.filter.fields.companyPlaceholder',
+                                        )}
+                                    />
                                 </div>
                                 <FormButtons
                                     hasActiveFilters={hasFilters}
@@ -218,4 +277,4 @@ const DrugTableFilterForm = ({
     )
 }
 
-export default DrugTableFilterForm
+export default DrugTableSearchForm

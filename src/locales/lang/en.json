@@ -98,6 +98,20 @@
             "title": "Drugs",
             "filter": {
                 "title": "Filters",
+                "search": {
+                    "title": "Quick Search",
+                    "collapsible": {
+                        "expand": "Expand search section",
+                        "collapse": "Collapse search section"
+                    }
+                },
+                "filters": {
+                    "title": "Advanced Filters",
+                    "collapsible": {
+                        "expand": "Expand filters section",
+                        "collapse": "Collapse filters section"
+                    }
+                },
                 "status": {
                     "label": "Status",
                     "placeholder": "Select status",
@@ -135,7 +149,16 @@
                 },
                 "filterDrawer": {
                     "filterButton": "Filter",
-                    "title": "Filter Drugs"
+                    "title": "Filter Drugs",
+                    "searchTools": "Drug Search Tools"
+                },
+                "fields": {
+                    "name": "Drug Name",
+                    "namePlaceholder": "Enter drug name or brand name",
+                    "ingredient": "Active Ingredient",
+                    "ingredientPlaceholder": "Enter main active ingredient",
+                    "company": "Manufacturing Company",
+                    "companyPlaceholder": "Enter manufacturing company name"
                 }
             },
             "components": {
@@ -193,40 +216,40 @@
                     "fetchingDrugData": "Loading drug data..."
                 },
                 "dialog": {
-                    "confirmDeletion": "Confirm Deletion",
-                    "deleteConfirmation": "Are you sure you want to delete this drug? This action cannot be undone.",
-                    "editDrug": "Edit Drug",
-                    "createDrug": "Create New Drug"
+                    "confirmDeletion": "Confirm Medication Deletion",
+                    "deleteConfirmation": "Are you sure you want to delete this pharmaceutical drug? This action cannot be undone and will permanently remove it from the database.",
+                    "editDrug": "Edit Pharmaceutical Drug Information",
+                    "createDrug": "Create New Pharmaceutical Medication"
                 },
                 "tooltip": {
-                    "clickToDelete": "Click to delete",
-                    "clickToEdit": "Click to edit"
+                    "clickToDelete": "Click to delete this medication",
+                    "clickToEdit": "Click to edit medication details"
                 },
                 "toast": {
-                    "error": "Error",
-                    "success": "Success",
-                    "errorDeletingDrug": "An error occurred while deleting the drug.",
-                    "drugCreated": "Drug created",
-                    "drugUpdatedSuccess": "Drug updated successfully",
-                    "errorUpdatingDrug": "An error occurred while updating the drug.",
-                    "errorFetchingDrugData": "An error occurred while fetching drug details data.",
-                    "drugCreatedSuccess": "Drug created successfully!",
-                    "errorCreatingDrug": "Failed to create drug. Please try again."
+                    "error": "Error Notification",
+                    "success": "Success Notification",
+                    "errorDeletingDrug": "An error occurred while deleting the pharmaceutical drug from the database.",
+                    "drugCreated": "Pharmaceutical medication successfully created",
+                    "drugUpdatedSuccess": "Pharmaceutical drug information updated successfully",
+                    "errorUpdatingDrug": "An error occurred while updating the pharmaceutical drug information.",
+                    "errorFetchingDrugData": "An error occurred while fetching pharmaceutical drug details from the database.",
+                    "drugCreatedSuccess": "New pharmaceutical medication created successfully in the system!",
+                    "errorCreatingDrug": "Failed to create pharmaceutical drug record. Please try again or contact support."
                 },
                 "error": {
-                    "failedToLoadDrugData": "Failed to load drug data. Please try again."
+                    "failedToLoadDrugData": "Failed to load pharmaceutical medication data. Please refresh the page or try again later."
                 },
                 "form": {
                     "sections": {
-                        "basicInfo": "Basic Information",
-                        "manufacturer": "Manufacturer Details",
-                        "usage": "Usage Information",
-                        "approval": "Approval Information",
-                        "formulation": "Formulation Details",
-                        "registrationCompany": "Registration Company",
-                        "additionalInfo": "Additional Information",
-                        "images": "Images",
-                        "statusSection": "Status Information"
+                        "basicInfo": "Pharmaceutical Drug Basic Information",
+                        "manufacturer": "Pharmaceutical Manufacturer Details",
+                        "usage": "Medication Usage & Dosage Information",
+                        "approval": "Regulatory Approval Information",
+                        "formulation": "Pharmaceutical Formulation Details",
+                        "registrationCompany": "Pharmaceutical Registration Company",
+                        "additionalInfo": "Additional Medication Information",
+                        "images": "Medication Images & Visual References",
+                        "statusSection": "Medication Status Information"
                     },
                     "statusSection": {
                         "title": "Status Information",
