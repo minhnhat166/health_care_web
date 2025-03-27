@@ -119,10 +119,7 @@ export const getUserListByKeyword = createAsyncThunk<
                 UserListByKeywordRequest
             >(keyword)
 
-            // Add better response validation
             if (response && response.data) {
-                console.log('🚀 ~ response received:', response)
-                // Make sure we're returning the expected structure
                 return { data: response.data }
             }
             return rejectWithValue({
