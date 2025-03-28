@@ -1,11 +1,13 @@
-import { Button, Tooltip } from '@/components/ui'
+import { Button } from '@/components/ui'
 import { Dialog } from '@/components/ui/Dialog'
 import { apiDeleteUsersId } from '@/services/UserService'
+import { useAppDispatch } from '@/store'
 import useToast from '@/utils/useToast'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaTrash } from 'react-icons/fa'
+import { getUserList } from '../../store'
 
 interface DeleteButtonProps {
     id: string
@@ -18,6 +20,7 @@ const DeleteButton = ({ id, onSuccess, onError }: DeleteButtonProps) => {
     const [isDeleting, setIsDeleting] = useState(false)
     const { t } = useTranslation()
     const toast = useToast()
+    const dispatch = useAppDispatch()
 
     const handleOpenConfirm = () => {
         setIsConfirmOpen(true)
@@ -41,6 +44,7 @@ const DeleteButton = ({ id, onSuccess, onError }: DeleteButtonProps) => {
                 ),
                 type: 'success',
             })
+            dispatch(getUserList({ page: 1, pageSize: 10 }))
         } catch (error) {
             setIsDeleting(false)
             if (onError) {
@@ -125,38 +129,40 @@ const DeleteButton = ({ id, onSuccess, onError }: DeleteButtonProps) => {
                         )}
                     </p>
 
-                    <motion.div
-                        variants={buttonVariants}
-                        whileHover="hover"
-                        whileTap="tap"
-                    >
-                        <Button
-                            variant="default"
-                            onClick={handleCloseConfirm}
-                            disabled={isDeleting}
+                    <div className="flex justify-end gap-2 p-4">
+                        <motion.div
+                            variants={buttonVariants}
+                            whileHover="hover"
+                            whileTap="tap"
                         >
-                            {t(
-                                'views.user.components.buttons.cancel',
-                                'Cancel',
-                            )}
-                        </Button>
-                    </motion.div>
-                    <motion.div
-                        variants={buttonVariants}
-                        whileHover="hover"
-                        whileTap="tap"
-                    >
-                        <Button
-                            variant="solid"
-                            onClick={handleDelete}
-                            loading={isDeleting}
+                            <Button
+                                variant="default"
+                                onClick={handleCloseConfirm}
+                                disabled={isDeleting}
+                            >
+                                {t(
+                                    'views.user.components.buttons.cancel',
+                                    'Cancel',
+                                )}
+                            </Button>
+                        </motion.div>
+                        <motion.div
+                            variants={buttonVariants}
+                            whileHover="hover"
+                            whileTap="tap"
                         >
-                            {t(
-                                'views.user.components.buttons.delete',
-                                'Delete',
-                            )}
-                        </Button>
-                    </motion.div>
+                            <Button
+                                variant="solid"
+                                onClick={handleDelete}
+                                loading={isDeleting}
+                            >
+                                {t(
+                                    'views.user.components.buttons.delete',
+                                    'Delete',
+                                )}
+                            </Button>
+                        </motion.div>
+                    </div>
                 </motion.div>
             </Dialog>
         </>
