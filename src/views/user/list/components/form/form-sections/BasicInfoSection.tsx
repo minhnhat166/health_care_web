@@ -1,4 +1,5 @@
 import { FormItem, Input } from '@/components/ui'
+import { UserRole } from '@/constants/roles.constant'
 import { Field } from 'formik'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,7 +22,7 @@ const BasicInfoSection = (props: any) => {
                     value={values.userId}
                     disabled
                     placeholder={t(
-                        'views.user.components.form.userIdPlaceholder',
+                        'views.user.components.form.placeholders.userIdPlaceholder',
                     )}
                 />
             </FormItem>
@@ -36,7 +37,7 @@ const BasicInfoSection = (props: any) => {
                     name="name"
                     value={values.name}
                     placeholder={t(
-                        'views.user.components.form.namePlaceholder',
+                        'views.user.components.form.placeholders.namePlaceholder',
                     )}
                 />
             </FormItem>
@@ -46,7 +47,7 @@ const BasicInfoSection = (props: any) => {
                     name="email"
                     value={values.email}
                     placeholder={t(
-                        'views.user.components.form.emailPlaceholder',
+                        'views.user.components.form.placeholders.emailPlaceholder',
                     )}
                 />
             </FormItem>
@@ -60,7 +61,7 @@ const BasicInfoSection = (props: any) => {
                     name="phoneNumber"
                     value={values.phoneNumber}
                     placeholder={t(
-                        'views.user.components.form.phoneNumberPlaceholder',
+                        'views.user.components.form.placeholders.phoneNumberPlaceholder',
                     )}
                 />
             </FormItem>
@@ -72,9 +73,11 @@ const BasicInfoSection = (props: any) => {
                 <Field
                     as={Input}
                     name="role"
-                    value={values.role}
+                    value={UserRole.user}
+                    defaultValue={UserRole.user}
+                    disabled
                     placeholder={t(
-                        'views.user.components.form.rolePlaceholder',
+                        'views.user.components.form.placeholders.rolePlaceholder',
                     )}
                 />
             </FormItem>

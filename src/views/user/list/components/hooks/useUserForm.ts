@@ -1,9 +1,12 @@
 import type { User } from '@/@types/user'
+import { UserRole } from '@/constants/roles.constant'
 import { apiGetUsersId, apiPutUsersId } from '@/services/UserService'
+import { useAppDispatch } from '@/store'
 import useToast from '@/utils/useToast'
 import { TFunction } from 'i18next'
 import { useCallback, useEffect, useMemo, useReducer } from 'react'
 import * as Yup from 'yup'
+import { getUserList } from '../../store'
 
 export const EDITABLE_FIELDS = [
     'userId',
@@ -25,20 +28,18 @@ interface UseUserFormProps {
 const createValidationSchema = (t: TFunction) =>
     Yup.object().shape({
         userId: Yup.string().required(
-            t('views.user.components.form.userIdRequired'),
+            t('views.user.components.form.validation.userIdRequired'),
         ),
         name: Yup.string().required(
-            t('views.user.components.form.nameRequired'),
+            t('views.user.components.form.validation.nameRequired'),
         ),
         email: Yup.string()
-            .email(t('views.user.components.form.emailInvalid'))
-            .required(t('views.user.components.form.emailRequired')),
+            .email(t('views.user.components.form.validation.emailInvalid'))
+            .required(t('views.user.components.form.validation.emailRequired')),
         phoneNumber: Yup.string().required(
-            t('views.user.components.form.phoneNumberRequired'),
+            t('views.user.components.form.validation.phoneNumberRequired'),
         ),
-        role: Yup.string().required(
-            t('views.user.components.form.roleRequired'),
-        ),
+        role: Yup.string().nullable(),
     })
 
 type FormState = {
@@ -92,6 +93,7 @@ const formReducer = (state: FormState, action: FormAction): FormState => {
 
 export const useUserForm = ({ id, onSave, onSuccess, t }: UseUserFormProps) => {
     const [state, dispatch] = useReducer(formReducer, initialState)
+    const dispatcher = useAppDispatch()
     const { isOpen, userData, isLoading, isSaving, error } = state
 
     const toast = useToast()
@@ -168,7 +170,11 @@ export const useUserForm = ({ id, onSave, onSuccess, t }: UseUserFormProps) => {
         ) => {
             dispatch({ type: 'SAVE_START' })
             try {
-                await apiPutUsersId(id, values as User)
+                await apiPutUsersId(id, {
+                    ...values,
+                    Fcmtoken: userData?.Fcmtoken ?? '',
+                } as User)
+
                 if (onSave) onSave(values)
 
                 toast({
@@ -180,19 +186,28 @@ export const useUserForm = ({ id, onSave, onSuccess, t }: UseUserFormProps) => {
                 })
 
                 dispatch({ type: 'SAVE_SUCCESS' })
+                dispatcher(getUserList({ page: 1, pageSize: 10 }))
                 if (onSuccess) onSuccess()
                 handleClose()
             } catch (error) {
-                dispatch({
-                    type: 'SAVE_ERROR',
-                    payload: 'views.user.components.toast.errorUpdatingUser',
-                })
-                handleError('views.user.components.toast.errorUpdatingUser')
+                const errorMsg = 'views.user.components.toast.errorUpdatingUser'
+                dispatch({ type: 'SAVE_ERROR', payload: errorMsg })
+                handleError(errorMsg)
             } finally {
                 setSubmitting(false)
             }
         },
-        [id, onSave, onSuccess, t, toast, handleClose, handleError],
+        [
+            id,
+            onSave,
+            onSuccess,
+            userData,
+            t,
+            toast,
+            dispatcher,
+            handleClose,
+            handleError,
+        ],
     )
 
     return {
