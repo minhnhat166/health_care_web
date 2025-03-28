@@ -6,5 +6,5 @@ export type User = {
     role: string | null
     createdAt: string
     updatedAt: string | null
-    fcmtoken: string
+    Fcmtoken: string
 }
